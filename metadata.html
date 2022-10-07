@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Metadata Generator</title>
+</head>
+<body>
+    <a id="downloadAnchorElem" style="display:none"></a>
+    <script>
+        const id = (new URLSearchParams(window.location.search)).get("id");
+        meta = {
+            name: `ERC721E #${id}`,
+            external_url: "https://twitter.com/k0rean_rand0m",
+            description: "A token you already own",
+            animation_url: `https://0xAvatar.github.io/image.html?id=${id}`
+        }
+        let dlAnchorElem = document.getElementById('downloadAnchorElem');
+        dlAnchorElem.setAttribute("href", `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(meta))}`);
+        dlAnchorElem.setAttribute("download", `metadata_${id}.json`);
+        dlAnchorElem.click();
+    </script>
+</body>
+</html>
