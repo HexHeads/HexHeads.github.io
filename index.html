@@ -87,7 +87,6 @@
         }
 
         async function connectMetaMask() {
-            console.log("Connecting MetaMask");
             if (typeof window.ethereum !== 'undefined') {
                 ethereum = window.ethereum;
                 let accounts = await ethereum.request({ method: 'eth_requestAccounts' });
@@ -102,6 +101,7 @@
                 console.log("Install MetaMask")
             }
         }
+        connectMetaMask()
 
         //* UI Updates *//
 
@@ -112,6 +112,10 @@
         }
 
         function updateHeader() {
+            if (!address) {
+                metamask.innerHTML = `<div class="button" onclick="connectMetaMask()">Connect Metamask</div>`;
+                return
+            }
             metamask.innerHTML = `
                 <div
                     onclick="connectMetaMask()"
@@ -121,12 +125,20 @@
         }
 
         function updateClaim() {
+            if (!address) {
+                claimElement.innerHTML = `<p style="padding-top: 20px">Connect wallet to reveal yours!</p>`
+                return
+            }
             claimElement.innerHTML = `
                 <div class="button" onclick="claim()" style="margin-top: 20px">Claim for free</div>
             `
         }
 
         function updateJpeg() {
+            if (!address) {
+                jpeg.innerHTML = `<img src="./img/showreel.gif"/>`
+                return
+            }
             jpeg.innerHTML = `
                 <canvas id="canvas" width="32" height="32"></canvas>
             `
