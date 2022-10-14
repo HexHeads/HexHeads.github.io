@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="styles/main.css">
+
+    <script src="libs/web3.min.js"></script>
+    <script src="libs/BigInteger.min.js"></script>
+    <script src="scripts/renderer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row" id="header">
+        <div class="col-xs-12 col-sm-12 col-lg-4" style="text-align: left">
+            <h1>
+                <a href="index.html" style="color: black">
+                    HexHeads / <span style="color: #fa6a0a">Scan</span>
+                </a>
+            </h1>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-lg-4" style="text-align: center; padding-top: 8px;">
+            <a href="bruteforce.html" class="link-underlined" style="margin-right: 7px;">Bruteforce</a>
+            <a href="bruteforce.html" class="link-underlined" style="margin-left: 7px;">Scan</a>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-lg-4" style="text-align: right">
+            <div style="margin-top: 7px;">
+                <a href="index.html" class="link-underlined">
+                    << Back to HexHeads.xyz
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="padding-top: 50px">
+        <div class="col-sm-12 col-md-6">
+            <p>
+                Enter any Ethereum address of NFT original owner to look up for the info.<br>
+                Addresses should be prefixed with 0x, ENS isn't supported yet.<br>
+            </p>
+            <div style="padding-bottom: 5px;.">Original owner address</div>
+            <div class="input-group">
+                <input type="text" id="search" class="form-control" aria-describedby="hash"
+                       placeholder=""
+                       onkeyup="searchUpdated(this)"
+                >
+            </div>
+            <p style="padding-top: 2vw" id="info"></p>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <canvas id="canvas" width="32" height="32"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+    const layers = ["Bubble Color", "Bubble", "Head", "Accessory", "Eyes", "Mouth"]
+
+    const traits = [
+        ["Sky", "Desert", "Field", "Syringa", "Deep Space", "Star", "Pool", "Ocean", "Fog", "Bubble Gum"],
+        ["", "Snowball", "Circles", "+", "|", "-", "*", "Dirty", "Dimmed", "Chess Lover", "Linear", "Radial", "/", "Beer Lover", "Matrix", "Shadow", "Field", "Open Sea", "Eclipse", "Half-Full", "Labyrinths", "Bees", "Peace", "Mess", "Aquarium", "Basketball", "Star", "Hazard", "Road", "Collectible"],
+        ["Human", "Human", "Human", "Human", "Alien | Moon", "Alien | Venus", "Alien | Mars", "Daemon", "Angel", "Anon", "Starborn", "Weird One"],
+        ["Bold", "Regular Haircut", "Regular Haircut", "Regular Haircut", "Regular Haircut", "Regular Haircut", "Warm Hat", "Halo", "Wires", "Horns", "Farmer", "Ninja", "Plastic Bag", "Science Fiction", "Nimbus", "Poseidon Crown", "Launchpad", "Crash", "Flower", "Rainy", "Regular Haircut", "Regular Haircut", "Regular Haircut", "Regular Haircut", "Regular Haircut", "Transmitter", "Foil Hat", "S.W.A.T. Hat", "Bear Market", "Into the Metaverse"],
+        ["Regular", "LOL", "| |", "- -", "Pretty shocked", "Geek Glasses", "3D", "Cool Glasses", "Elite", "+ +", "T T", "Eyelashes", "\\ /", "/ \\", "Beach Party", "Take a look", "Why pink?!", "Spider", "Tears", "Observing", "Suspicious", "Zombie", "Extra Eye", "Pleasure", "Rich Nerd", "Nerd Sunglasses", "Ninja", "Night Vision", "Displaced", "Meta Headset", ""],
+        ["Ok", "M?", "Hmm", "Aww", "Yum", "Meh", "Mustache", "M-m?", "Yay", "S-s-s", "...", "Red Lips", "Pop", "Ueee", "Hipster Mustache", "Talking", "Sweet-tooth", "Smoker", "Ice Cream Lover", "Woah!", "Tiny Mustache", "Pro Hipster", "Wise", "Beardie", "Oops", "Vampire", "Ninja Mask", "Gas Mask", "Pure Gold", "Sharp Teeth"]
+    ]
+
+    const searchDOM = document.getElementById("search");
+    const infoDOM = document.getElementById("info");
+    let address = (new URLSearchParams(window.location.search)).get("address");
+
+    if (address !== null) searchUpdated(searchDOM, address)
+
+    function bigIntToAddress(value) {
+        value = value.toString(16);
+        return "0x" + "0".repeat(40-value.length) + value;
+    }
+
+    function searchUpdated(input, forcedValue) {
+        let value = forcedValue || input.value;
+        let address;
+        let id;
+
+        if (value.length === 0) return;
+
+        if (value.slice(0, 2) === "0x") {
+            if (value.length < 42) {
+                infoDOM.innerText = "Invalid address";
+                return
+            } else if (value.length > 42) {
+                value = value.slice(0, 42);
+            }
+            address = value;
+            id = bigInt(address.slice(2), 16);
+        } else {
+            id = BigInt(value)
+            if (id.compareTo(BigInt("1461501637330902918203684832716283019655932542975"))) {
+                infoDOM.innerText = "nonexistent NFT";
+            }
+            address = bigIntToAddress(id);
+        }
+
+        let itemTraits = buildTraits(address)
+        renderFromTraits(itemTraits)
+
+        let report = `
+                    <div><span class="report-label">Original Owner:</span> ${address}</div>
+                    <div><span class="report-label">ID:</span> ${id}</div>
+                    <div style="margin-bottom: 15px;"><a href="#">OpenSea<a/> / <a href="#">LooksRare<a/></div>`
+        report += `<div><span class="report-label">Background:</span> ${itemTraits[0]}</div>`;
+        for (let i = 0; i < layers.length; i++){
+            report += `<div><span class="report-label">${layers[i]}:</span> ${traits[i][itemTraits[i+1]]}</div>`;
+        }
+
+        infoDOM.innerHTML = report
+
+        input.value = value;
+    }
+</script>
+
+<style>
+    canvas {
+        width: 35vw;
+        height: 35vw;
+        box-shadow: 5px 5px 43px 0px rgba(0,0,0,0.75);
+        -webkit-box-shadow: 5px 5px 43px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 5px 5px 43px 0px rgba(0,0,0,0.75);
+    }
+
+    .report-label {
+        color: gray;
+    }
+</style>
+</body>
+</html>

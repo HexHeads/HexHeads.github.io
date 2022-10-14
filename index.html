@@ -3,18 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>BubbleHeads</title>
+
     <link rel="icon" type="image/x-icon" href="img/head.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="styles/main.css">
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 </head>
 <body>
 
     <div class="container-fluid">
         <div class="row" id="header">
-            <div class="col-xs-12 col-sm-6 col-lg-6" style="text-align: left">
-                <h1>BubbleHeads</h1>
+            <div class="col-xs-12 col-sm-12 col-lg-4" style="text-align: left">
+                <a href="index.html" style="color: black">
+                    <h1>HexHeads</h1>
+                </a>
             </div>
-            <div class="col-xs-12 col-sm-6 col-lg-6" style="text-align: right">
+            <div class="col-xs-12 col-sm-12 col-lg-4" style="text-align: center; padding-top: 8px;">
+                <a href="bruteforce.html" class="link-underlined" style="margin-right: 7px;">Bruteforce</a>
+                <a href="scan.html" class="link-underlined" style="margin-left: 7px;">Scan</a>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-lg-4" style="text-align: right">
                 <div id="metamask">
                     <div class="button" onclick="connectMetaMask()">Connect Metamask</div>
                 </div>
@@ -148,66 +157,9 @@
 
     <style>
 
-        @font-face {
-            font-family: 'Orange Kid'; /*a name to be used later*/
-            src: url('./fonts/orange-kid.ttf'); /*URL to font*/
-        }
-
-        body {
-            font-family: 'Orange Kid', sans-serif;
-            font-size: 150%;
-        }
-
-        a {
-            text-decoration: none;
-        }
-
-        .container-fluid > * {
-            padding-left: 3%;
-            padding-right: 3%;
-        }
-
-        #header {
-            border-bottom: 2px solid black;
-            padding: 15px 3% 10px 3%;
-        }
-
-        #header h1 {
-        }
-
-        #metamask {
-        }
-
-        .button {
-            padding: 3px 10px 5px 10px;
-            color: black;
-            border: 1px solid black;
-            display: inline-block;
-            cursor: pointer;
-            background-color: white;
-            transition: .3s;
-        }
-
-         .button:hover {
-            background-color: #fa6a0a;
-            color: white;
-            transition: .3s;
-        }
-
-        .preview {
-            text-align: center;
-        }
-
         .preview > div > img {
             width: 35vw;
             height: 35vw;
-        }
-
-        canvas, img {
-            image-rendering: -moz-crisp-edges;
-            image-rendering: -webkit-crisp-edges;
-            image-rendering: pixelated;
-            image-rendering: crisp-edges;
         }
 
         canvas {

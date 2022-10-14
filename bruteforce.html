@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="styles/main.css">
+
+    <script src="libs/web3.min.js"></script>
+    <script src="scripts/renderer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <div class="container-fluid">
+        <div class="row" id="header">
+            <div class="col-xs-12 col-sm-12 col-lg-4" style="text-align: left">
+                <h1>
+                    <a href="index.html" style="color: black">
+                        HexHeads / <span style="color: #fa6a0a">Bruteforce</span>
+                    </a>
+                </h1>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-lg-4" style="text-align: center; padding-top: 8px;">
+                <a href="bruteforce.html" class="link-underlined" style="margin-right: 7px;">Bruteforce</a>
+                <a href="scan.html" class="link-underlined" style="margin-left: 7px;">Scan</a>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-lg-4" style="text-align: right">
+                <div style="margin-top: 7px;">
+                    <a href="index.html" class="link-underlined">
+                        << Back to HexHeads.xyz
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="padding-top: 50px">
+            <div class="col">
+                <h2>Read First</h2>
+                <p>This page allows you to find the <span style="color: #fa6a0a">Private Key</span> for the wallet that owns the NFT you want to claim!</p>
+                <p>Select traits below and bruteforce.<br>
+                    Depending on how many traits you specify it might take some time.<br>
+                    When the Private Key will be found, copy it and import it in your MetaMask.</p>
+                <p><b>Safety:</b>
+                    <ul>
+                        <li>This page is also available at GitHub Pages domain:
+                            <a href="https://HexHeads.github.io/bruteforce.html">HexHeads.github.io/bruteforce.html</a>
+                        </li>
+                        <li>The source code of this page might be reviewed in
+                            <a href="https://github.com/HexHeads/HexHeads">GitHub repository</a>
+                            serving this page via GitHub Pages.</li>
+                        <li><span style="color: #fa6a0a">This page works offline</span>, so you can turn off the internet connection while the process.</li>
+                        <li>This page uses Web3.js for wallet generation. The version of the library is the same with
+                            <a href="https://github.com/web3/web3.js/blob/6311abe8cedd70a2863edee8adc381eb63515da4/dist/web3.min.js">the one published in web3.js Github</a> and may be verified.
+                        </li>
+                        <li>The randomness seed is up to Web3 library.</li>
+                        <li>Everything is provided "as it is" and you're the only who's responsible for your Private Keys.</li>
+                        <li><span style="color: #fa6a0a">DYOR</span></li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+
+        <div class="row" style="padding-top: 50px">
+            <div class="col-sm-12 col-md-6">
+                <div style="padding-bottom: 5px;.">Color</div>
+                <div class="input-group">
+                    <span class="input-group-text" id="hash">#</span>
+                    <input type="text" id="colorPicker" class="form-control" aria-describedby="hash"
+                           placeholder="Any (Specify in FFFFFF format)"
+                           onkeyup="colorUpdated(this)"
+                    >
+                </div>
+                <div id="traits"></div>
+                <div style="text-align: center; padding: 20px 0 20px 0;">
+                    <div class="button" onclick="bruteforce()">Bruteforce!</div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 preview">
+                <canvas id="canvas" width="32" height="32"></canvas>
+                <p id="counter"></p>
+                <div style="text-align: left">
+                    <p id="address">
+                        <span style="color: #fa6a0a">Address:</span><br> Unknown
+                    </p>
+                    <p id="privateKey">
+                        <span style="color: #fa6a0a">Private Key:</span><br> Unknown
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        const targetTraits = [undefined, undefined, undefined, undefined, undefined, undefined, undefined]
+
+        const layers = ["Bubble Color", "Bubble", "Head", "Accessory", "Eyes", "Mouth"]
+
+        const traits = [
+            ["Sky", "Desert", "Field", "Syringa", "Deep Space", "Star", "Pool", "Ocean", "Fog", "Bubble Gum"],
+            ["", "Snowball", "Circles", "+", "|", "-", "*", "Dirty", "Dimmed", "Chess Lover", "Linear", "Radial", "/", "Beer Lover", "Matrix", "Shadow", "Field", "Open Sea", "Eclipse", "Half-Full", "Labyrinths", "Bees", "Peace", "Mess", "Aquarium", "Basketball", "Star", "Hazard", "Road", "Collectible"],
+            ["Human", "Human", "Human", "Human", "Alien | Moon", "Alien | Venus", "Alien | Mars", "Daemon", "Angel", "Anon", "Starborn", "Weird One"],
+            ["Bold", "Regular Haircut", "Regular Haircut", "Regular Haircut", "Regular Haircut", "Regular Haircut", "Warm Hat", "Halo", "Wires", "Horns", "Farmer", "Ninja", "Plastic Bag", "Science Fiction", "Nimbus", "Poseidon Crown", "Launchpad", "Crash", "Flower", "Rainy", "Regular Haircut", "Regular Haircut", "Regular Haircut", "Regular Haircut", "Regular Haircut", "Transmitter", "Foil Hat", "S.W.A.T. Hat", "Bear Market", "Into the Metaverse"],
+            ["Regular", "LOL", "| |", "- -", "Pretty shocked", "Geek Glasses", "3D", "Cool Glasses", "Elite", "+ +", "T T", "Eyelashes", "\\ /", "/ \\", "Beach Party", "Take a look", "Why pink?!", "Spider", "Tears", "Observing", "Suspicious", "Zombie", "Extra Eye", "Pleasure", "Rich Nerd", "Nerd Sunglasses", "Ninja", "Night Vision", "Displaced", "Meta Headset", ""],
+            ["Ok", "M?", "Hmm", "Aww", "Yum", "Meh", "Mustache", "M-m?", "Yay", "S-s-s", "...", "Red Lips", "Pop", "Ueee", "Hipster Mustache", "Talking", "Sweet-tooth", "Smoker", "Ice Cream Lover", "Woah!", "Tiny Mustache", "Pro Hipster", "Wise", "Beardie", "Oops", "Vampire", "Ninja Mask", "Gas Mask", "Pure Gold", "Sharp Teeth"]
+        ]
+
+        const counterDOM = document.getElementById("counter");
+        const addressDOM = document.getElementById("address");
+        const privateKeyDOM = document.getElementById("privateKey");
+        const colorPickerDOM = document.getElementById("colorPicker");
+        const traitsDOM = document.getElementById("traits");
+        const web3 = new Web3;
+        let interval;
+
+        function colorUpdated(picker) {
+            addressDOM.innerHTML = `<span style="color: #fa6a0a">Address:</span><br> Unknown`;
+            privateKeyDOM.innerHTML = `<span style="color: #fa6a0a">Private Key:</span><br> Unknown`;
+
+            const allowedSymbols = "0123456789ABCDEF";
+            let value = picker.value.toUpperCase();
+            value = value.slice(0, 6);
+
+            if(value.length === 0) {
+                targetTraits[0] = undefined;
+                renderFromTraits(targetTraits);
+                return;
+            }
+
+            for(let i in value) {
+                let index = parseInt(i);
+                if(allowedSymbols.indexOf(value[index]) < 0) {
+                    value = value.slice(0, index) + value.slice(index+1);
+                }
+            }
+            console.log(value.length)
+            if (value.length === 6) {
+                targetTraits[0] = "#" + value;
+                renderFromTraits(targetTraits);
+            }
+            picker.value = value;
+        }
+
+        function selectOnChange(layer, trait) {
+            if (interval) clearInterval(interval);
+
+            addressDOM.innerHTML = `<span style="color: #fa6a0a">Address:</span><br> Unknown`;
+            privateKeyDOM.innerHTML = `<span style="color: #fa6a0a">Private Key:</span><br> Unknown`;
+
+            targetTraits[layer+1] = trait === "undefined" ? undefined : parseInt(trait);
+            renderFromTraits(targetTraits);
+        }
+
+        function prepareForm() {
+            for (let l in layers) {
+                const selectNode = document.createElement("div");
+                let nodeInnerHTML = `
+                    <div class="select-header">${layers[l]}</div>
+                    <select class="form-select" onchange="selectOnChange(${l}, this.value)">
+                    <option value="${undefined}">Any</option>
+                `;
+                for (let t in traits[l]) {
+                    nodeInnerHTML += `<option value="${t}">${traits[l][t]}</option>`;
+                }
+                nodeInnerHTML += `</select>`;
+                selectNode.innerHTML = nodeInnerHTML;
+                traitsDOM.appendChild(selectNode);
+            }
+        }
+        prepareForm()
+        renderFromTraits(targetTraits)
+
+        function bruteforce() {
+
+            if (interval) clearInterval(interval);
+
+            let counter = 0;
+
+            interval = setInterval(() => {
+                counterDOM.innerText = "Checked: " + ++counter;
+
+                const account = web3.eth.accounts.create();
+
+                addressDOM.innerHTML = `<span style="color: #fa6a0a">Address:</span><br> ${account.address}`;
+                privateKeyDOM.innerHTML = `<span style="color: #fa6a0a">Private Key:</span><br> ${account.privateKey}`;
+
+                let actualTraits = buildTraits(account.address);
+                renderFromTraits(actualTraits);
+
+                for(let i = 0; i <= 6; i++) {
+                    if (targetTraits[i] !== undefined && targetTraits[i] !== actualTraits[i]) {
+                        return;
+                    }
+                }
+                clearInterval(interval);
+            }, 0.01)
+        }
+
+    </script>
+
+    <style>
+        canvas {
+            width: 35vw;
+            height: 35vw;
+            box-shadow: 5px 5px 43px 0px rgba(0,0,0,0.75);
+            -webkit-box-shadow: 5px 5px 43px 0px rgba(0,0,0,0.75);
+            -moz-box-shadow: 5px 5px 43px 0px rgba(0,0,0,0.75);
+        }
+
+        .select-header {
+            padding: 10px 0 5px 0;
+        }
+    </style>
+</body>
+</html>
