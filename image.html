@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Avatar Image Generator</title>
+    <script src="libs/BigInteger.min.js"></script>
 </head>
 <body>
     <canvas id="canvas" width="32" height="32"></canvas>
     <script src="scripts/renderer.js"></script>
     <script>
-        let address = (new URLSearchParams(window.location.search)).get("address").slice(2);
-        // 0x3A205E'Cf286'bBe11'46063'8aCe4'7D501'A53fB'91C0
+        let address = (new URLSearchParams(window.location.search)).get("address");
         render(address)
     </script>
 
@@ -20,8 +20,8 @@
         }
 
         canvas {
-            width: 300px;
-            height: 300px;
+            width: 100vh;
+            height: 100vh;
             image-rendering: -moz-crisp-edges;
             image-rendering: -webkit-crisp-edges;
             image-rendering: pixelated;
