@@ -24,8 +24,11 @@
                 </h1>
             </div>
             <div class="col-xs-12 col-sm-12 col-lg-4" style="text-align: center; padding-top: 8px;">
-                <a href="bruteforce.html" class="link-underlined" style="margin-right: 7px;">Bruteforce</a>
-                <a href="scan.html" class="link-underlined" style="margin-left: 7px;">Scan</a>
+                <a href="index.html" class="link-underlined" style="margin-right: 7px;">Main</a> |
+                <a href="scan.html" class="link-underlined" style="margin-left: 7px; margin-right: 7px;">Scan</a> |
+                <span class="link-disabled" style="margin-left: 7px; margin-right: 7px;">DAO</span> |
+                <a href="https://discord.gg/4g3enFkDPT" class="link-underlined" style="margin-left: 7px; margin-right: 7px;" target="_blank">Discord</a> |
+                <a href="scan.html" class="link-underlined" style="margin-left: 7px;">Twitter</a>
             </div>
             <div class="col-xs-12 col-sm-12 col-lg-4" style="text-align: right">
                 <div style="margin-top: 7px;">
@@ -81,7 +84,7 @@
                     </label>
                 </div>
                 <div style="text-align: center; padding: 20px 0 20px 0;">
-                    <div class="button" onclick="bruteforce()">Bruteforce!</div>
+                    <div class="button" onclick="newSearch()">Bruteforce!</div>
                 </div>
             </div>
             <div class="col-sm-12 col-md-6 preview">
@@ -118,8 +121,10 @@
         const addressDOM = document.getElementById("address");
         const privateKeyDOM = document.getElementById("privateKey");
         const traitsDOM = document.getElementById("traits");
+        const foilDOM = document.getElementById("foilCheckbox");
+        const colorPickerDOM = document.getElementById("colorPicker");
         const web3 = new Web3;
-        let interval;
+        let stop = false;
 
         function colorUpdated(picker) {
             addressDOM.innerHTML = `<span style="color: #fa6a0a">Address:</span><br> Unknown`;
@@ -130,6 +135,7 @@
             value = value.slice(0, 6);
 
             if(value.length === 0) {
+                stop = true;
                 targetTraits[0] = undefined;
                 renderFromTraits(targetTraits);
                 return;
@@ -142,14 +148,26 @@
                 }
             }
             if (value.length === 6) {
+                stop = true;
                 targetTraits[0] = "#" + value;
                 renderFromTraits(targetTraits);
+                if (targetTraits[1] === "Foil") {
+                    targetTraits[1] = undefined;
+                    foilDOM.checked = false;
+                }
             }
             picker.value = value;
         }
 
         function selectOnChange(layer, trait) {
-            if (interval) clearInterval(interval);
+            stop = true;
+
+            if (layer === 0) {
+                foilDOM.checked = false;
+                if(targetTraits[0] === "Foil") {
+                    targetTraits[0] = undefined;
+                }
+            }
 
             addressDOM.innerHTML = `<span style="color: #fa6a0a">Address:</span><br> Unknown`;
             privateKeyDOM.innerHTML = `<span style="color: #fa6a0a">Private Key:</span><br> Unknown`;
@@ -159,12 +177,14 @@
         }
 
         function foilOnChange(foil) {
-            if (interval) clearInterval(interval);
+            stop = true;
 
             addressDOM.innerHTML = `<span style="color: #fa6a0a">Address:</span><br> Unknown`;
             privateKeyDOM.innerHTML = `<span style="color: #fa6a0a">Private Key:</span><br> Unknown`;
 
             if(foil) {
+                colorPickerDOM.value = "";
+                document.getElementById("select-0").value = undefined;
                 targetTraits[0] = "Foil";
                 targetTraits[1] = "Foil";
             } else {
@@ -180,7 +200,7 @@
                 const selectNode = document.createElement("div");
                 let nodeInnerHTML = `
                     <div class="select-header">${layers[l]}</div>
-                    <select class="form-select" onchange="selectOnChange(${l}, this.value)">
+                    <select class="form-select" id="select-${l}" onchange="selectOnChange(${l}, this.value)">
                     <option value="${undefined}">Any</option>
                 `;
                 for (let t in traits[l]) {
@@ -194,30 +214,40 @@
         prepareForm()
         renderFromTraits(targetTraits)
 
+        let counter = 0;
+
+        function newSearch() {
+            console.log(targetTraits)
+            counter = 0;
+            stop = false;
+            bruteforce();
+        }
+
+        let actualTraits = []
         function bruteforce() {
 
-            if (interval) clearInterval(interval);
+            if (stop) {
+                renderFromTraits(targetTraits);
+                return;
+            }
 
-            let counter = 0;
+            counterDOM.innerText = "Checked: " + ++counter;
 
-            interval = setInterval(() => {
-                counterDOM.innerText = "Checked: " + ++counter;
+            const account = web3.eth.accounts.create();
 
-                const account = web3.eth.accounts.create();
+            addressDOM.innerHTML = `<span style="color: #fa6a0a">Address:</span><br> ${account.address}`;
+            privateKeyDOM.innerHTML = `<span style="color: #fa6a0a">Private Key:</span><br> ${account.privateKey}`;
 
-                addressDOM.innerHTML = `<span style="color: #fa6a0a">Address:</span><br> ${account.address}`;
-                privateKeyDOM.innerHTML = `<span style="color: #fa6a0a">Private Key:</span><br> ${account.privateKey}`;
+            actualTraits = buildTraits(account.address);
 
-                let actualTraits = buildTraits(account.address);
-                renderFromTraits(actualTraits);
+            renderFromTraits(actualTraits);
 
-                for(let i = 0; i <= 6; i++) {
-                    if (targetTraits[i] !== undefined && targetTraits[i] !== actualTraits[i]) {
-                        return;
-                    }
+            for(let i = 0; i <= 6; i++) {
+                if (targetTraits[i] !== undefined && targetTraits[i] !== actualTraits[i]) {
+                    setTimeout(bruteforce, 10)
+                    return;
                 }
-                clearInterval(interval);
-            }, 0.01)
+            }
         }
 
     </script>

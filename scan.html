@@ -10,24 +10,28 @@
     <script src="libs/web3.min.js"></script>
     <script src="libs/BigInteger.min.js"></script>
     <script src="scripts/renderer.js"></script>
+    <script src="./env.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 </head>
 <body>
 
 <div class="container-fluid">
     <div class="row" id="header">
-        <div class="col-xs-12 col-sm-12 col-lg-4" style="text-align: left">
+        <div class="col-xs-12 col-sm-12 col-lg-3" style="text-align: left">
             <h1>
                 <a href="index.html" style="color: black">
                     HexHeads / <span style="color: #fa6a0a">Scan</span>
                 </a>
             </h1>
         </div>
-        <div class="col-xs-12 col-sm-12 col-lg-4" style="text-align: center; padding-top: 8px;">
-            <a href="bruteforce.html" class="link-underlined" style="margin-right: 7px;">Bruteforce</a>
-            <a href="bruteforce.html" class="link-underlined" style="margin-left: 7px;">Scan</a>
+        <div class="col-xs-12 col-sm-12 col-lg-6" style="text-align: center; padding-top: 8px;">
+            <a href="index.html" class="link-underlined" style="margin-right: 7px;">Main</a> |
+            <a href="scan.html" class="link-underlined" style="margin-left: 7px; margin-right: 7px;">Scan</a> |
+            <span class="link-disabled" style="margin-left: 7px; margin-right: 7px;">DAO</span> |
+            <a href="https://discord.gg/4g3enFkDPT" class="link-underlined" style="margin-left: 7px; margin-right: 7px;" target="_blank">Discord</a> |
+            <a href="scan.html" class="link-underlined" style="margin-left: 7px;">Twitter</a>
         </div>
-        <div class="col-xs-12 col-sm-12 col-lg-4" style="text-align: right">
+        <div class="col-xs-12 col-sm-12 col-lg-3" style="text-align: right">
             <div style="margin-top: 7px;">
                 <a href="index.html" class="link-underlined">
                     << Back to HexHeads.xyz
@@ -39,16 +43,16 @@
     <div class="row" style="padding-top: 50px">
         <div class="col-sm-12 col-md-6">
             <p>
-                Enter any Ethereum address of NFT original owner to look up for the info.<br>
-                Addresses should be prefixed with 0x, ENS isn't supported yet.<br>
+                Enter any address of identicon minter or NFT id to look up for the info.<br>
+                Set your primary identicon if you own several.
             </p>
-            <div style="padding-bottom: 5px;.">Original owner address</div>
+            <div style="padding-bottom: 5px;.">Minter address / NFT id</div>
             <div class="input-group">
                 <input type="text" id="search" class="form-control" aria-describedby="hash"
                        placeholder=""
-                       onkeyup="searchUpdated(this)"
-                >
+                       onkeyup="searchUpdated(this, null)">
             </div>
+            <div style="font-size: 75%; color: gray">Addresses should be prefixed with 0x, ENS isn't supported yet.</div>
             <p style="padding-top: 2vw" id="info"></p>
         </div>
         <div class="col-sm-12 col-md-6">
@@ -58,6 +62,20 @@
 </div>
 
 <script>
+
+    let web3 = undefined;
+    let hexHeadsContract = undefined;
+    async function connectMetaMask() {
+        if (typeof window.ethereum !== 'undefined') {
+            ethereum = window.ethereum;
+            web3 = new Web3(window.ethereum);
+            hexHeadsContract = new web3.eth.Contract(contractABI, contractAddress);
+        } else {
+            console.log("Install MetaMask")
+        }
+    }
+    connectMetaMask()
+
     const layers = ["Bubble Color", "Bubble", "Head", "Accessory", "Eyes", "Mouth"]
 
     const traits = [
@@ -77,10 +95,12 @@
 
     function bigIntToAddress(value) {
         value = value.toString(16);
-        return "0x" + "0".repeat(40-value.length) + value;
+        // TODO Double check
+        return "0x" + value.padStart(40, "0");
+        // return "0x" + "0".repeat(40-value.length) + value;
     }
 
-    function searchUpdated(input, forcedValue) {
+    async function searchUpdated(input, forcedValue) {
         let value = forcedValue || input.value;
         let address;
         let id;
@@ -107,13 +127,28 @@
         let itemTraits = buildTraits(address)
         renderFromTraits(itemTraits)
 
-        let report = `
-                    <div><span class="report-label">Original Owner:</span> ${address}</div>
-                    <div><span class="report-label">ID:</span> ${id}</div>
-                    <div style="margin-bottom: 15px;"><a href="#">OpenSea<a/> / <a href="#">LooksRare<a/></div>`
+        let report = `<div><span class="report-label">Minter:</span> ${address}</div>`
+        report += `<div><span class="report-label">Owner:</span> ${address}</div>`
+        report += `<div><span class="report-label">ID:</span> ${id}</div>
+                    <div style="margin-bottom: 15px;">`
+
+        let claimed = true
+        if (web3 !== undefined) {
+            claimed = await hexHeadsContract.methods.minted(bigInt(address.slice(2), 16).toString()).call()
+        }
+        if (claimed) {
+            report += `<div><span class="report-label">Claimed:</span> Yes</div>
+                   <a href="https://opensea.io/assets/ethereum/${contractAddress}/${id}">OpenSea<a/> /
+                   <a href="https://looksrare.org/collections/${contractAddress}/${id}">LooksRare<a/></div>`
+        } else {
+            report += `<div><span class="report-label">Claimed:</span> No</div><br>`
+        }
+
+        const prime = await hexHeadsContract.methods.prime(id.toString()).call()
+        report += `<div><span class="report-label">Prime:</span> ${prime ? 'Yes':'No'}</div>`;
         report += `<div><span class="report-label">Background:</span> ${itemTraits[0]}</div>`;
-        for (let i = 0; i < layers.length; i++){
-            const traitValue = itemTraits[i+1] === "Foil" ? "Foil" : traits[i][itemTraits[i+1]];
+        for (let i = 0; i < layers.length; i++) {
+            const traitValue = itemTraits[i + 1] === "Foil" ? "Foil" : traits[i][itemTraits[i + 1]];
             report += `<div><span class="report-label">${layers[i]}:</span> ${traitValue}</div>`;
         }
 

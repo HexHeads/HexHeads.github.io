@@ -30,6 +30,9 @@ a {
     cursor: pointer;
     background-color: white;
     transition: .3s;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
 }
 
 .button:hover {
@@ -49,6 +52,12 @@ a {
 
 .link-underlined:hover {
     color: #249fde;
+}
+
+.link-disabled {
+    color: grey;
+    text-decoration: underline;
+    cursor: default;
 }
 
 canvas, img {

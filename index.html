@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>BubbleHeads</title>
+    <title>HexHeads</title>
 
     <link rel="icon" type="image/x-icon" href="img/head.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
@@ -10,6 +10,8 @@
 
     <script src="libs/BigInteger.min.js"></script>
     <script src="scripts/renderer.js"></script>
+    <script src="libs/web3.min.js"></script>
+    <script src="./env.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -22,8 +24,11 @@
                 </a>
             </div>
             <div class="col-xs-12 col-sm-12 col-lg-4" style="text-align: center; padding-top: 8px;">
-                <a href="bruteforce.html" class="link-underlined" style="margin-right: 7px;">Bruteforce</a>
-                <a href="scan.html" class="link-underlined" style="margin-left: 7px;">Scan</a>
+                <a href="bruteforce.html" class="link-underlined" style="margin-right: 7px;">Bruteforce</a> |
+                <a href="scan.html" class="link-underlined" style="margin-left: 7px; margin-right: 7px;">Scan</a> |
+                <span class="link-disabled" style="margin-left: 7px; margin-right: 7px;">DAO</span> |
+                <a href="https://discord.gg/4g3enFkDPT" class="link-underlined" style="margin-left: 7px; margin-right: 7px;" target="_blank">Discord</a> |
+                <a href="scan.html" class="link-underlined" style="margin-left: 7px;">Twitter</a>
             </div>
             <div class="col-xs-12 col-sm-12 col-lg-4" style="text-align: right">
                 <div id="metamask">
@@ -34,24 +39,70 @@
 
         <div class="row" style="padding-top: 50px">
             <div class="col-sm-12 col-md-6" style="text-align: left">
-                <p>The first project based on <span style="color: #fa6a0a">ERC-721E</span></p>
+<!--                <p>The first project based on <span style="color: #fa6a0a">ERC-721E</span></p>-->
+                <h3 style="padding-bottom: 2vh">HexHeads are faces of Ethereum community!</h3>
+                <div>
+                    There are more than <span style="color: #fa6a0a">1.5 quadrillion unique</span> NFTs and exactly 1'461'501'637'330'902'918'203'684'832'716'283'019'655'932'542'975 in total.<br>
+                    So every Ethereum address owns one!<br>
+                    HexHeads are supported by several Web3 projects to render users' avatars in their apps, but there's more...<br><br>
+
+                    Since these NFTs are owned by everyone, HexHeads is <span style="color: #fa6a0a">the largest Web3 community</span> and a DAO.
+                    There are two roles: Observer and Prime.<br><br>
+
+                    Fell free to claim your NFT <span style="color: #fa6a0a">for free</span>, join our <a href="#" class="blue-link">Discord</a> and become an Observer.<br>
+                    If you wish to access our private server, take a part in DAO voting and get all benefits, chase for the Prime role.<br><br>
+
+                    You have several options how to obtain <span style="color: #fa6a0a">Prime</span>:<br>
+
+                    <div><b>- Donate for the Prime trait.</b></div>
+                    <div style="margin-left: 2vw;">
+                        The price is dynamic and calculated as an average among all supporters.<br>
+                        Current donation amount for obtaining Prime role: <span id="primePrice"></span> ETH
+                    </div>
+
+                    <div><b>- Buy a Prime HexHead on Marketplaces.</b></div>
+                    <div style="margin-left: 2vw;">
+                        <a href="#" class="blue-link">OpenSea</a> |
+                        <a href="#" class="blue-link">LooksRare</a>
+                    </div>
+
+                    <div><b>- Find a wallet eligible for minting Foil HexHead.</b></div>
+                    <div style="margin-left: 2vw;">
+                        Check out <a href="bruteforce.html" class="blue-link">HexHeads/Bruteforce</a> to try your luck!
+                    </div>
+
+                    <div><b>- Support HexHeads as avatars in your Web3 project.</b></div>
+                    <div style="margin-left: 2vw;">
+                        Contact us in <a href="bruteforce.html" class="blue-link">Discord</a> to be promoted!
+                    </div>
+
+                    <div><b>- Complete challenges to promote your HexHead to Foil.</b></div>
+                    <div style="margin-left: 2vw;">
+                        Follow HexHead <a href="#" class="blue-link">Twitter</a> to not miss the chance!
+                    </div>
+                </div>
+                <br><hr>
                 <p>
+                    HexHeads Partners:<br>
+                    <a href="#" class="blue-link">OuterCircle</a> |
+                    <a href="#" class="blue-link">Surreal</a> |
+                    <a href="#" class="blue-link">Frenly</a>
+
+                    <br><br>
+
                     By <a href="https://twitter.com/k0rean_rand0m"
                           target="_blank"
-                          style="color: #249fde"><u>@k0rean_rand0m</u></a>
-                </p>
-                <p>
-                    These NFTs are revealed and owned by <b>Every</b> wallet.<br>
-                    Connect MetaMask to see yours and claim it <b>for free</b>! Don't like yours? Just switch the account and try your luck again. Wanna something specific?
-                    Bruteforce wallets or buy the one on <a href="https://opensea.io" style="color: #249fde"><u>OpenSea</u></a>!
+                          class="blue-link"><u>@k0rean_rand0m</u></a>
                 </p>
             </div>
             <div class="col-sm-12 col-md-6 preview">
-                <div id="jpeg">
-                    <img src="./img/showreel.gif"/>
-                </div>
-                <div id="claimElement">
-                    <p style="padding-top: 20px">Connect wallet to reveal yours!</p>
+                <div style="position: sticky; top: 5vh">
+                    <div id="jpeg">
+                        <img src="./img/showreel.gif"/>
+                    </div>
+                    <div id="claimElement">
+                        <p style="padding-top: 20px">Connect wallet to reveal yours!</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -62,43 +113,46 @@
 
         //* Elements *//
         const claimElement = document.getElementById("claimElement")
+        const primePriceDOM = document.getElementById("primePrice")
         const metamask = document.getElementById("metamask");
         const jpeg = document.getElementById("jpeg")
 
         //* Web3 *//
         let ethereum
         let address
+        let web3 = undefined
+        let hexHeadsContract = undefined
+
+        let primePrice = "...";
 
         async function claimable() {
-            const transaction = {
-                to: '0xb3fcc6fd04a4ca8d3500fe655ce039f1b4ee43b5', // Required except during contract publications.
-                from: address,
-                data:
-                    `0x6a627842000000000000000000000000${address.slice(2)}`, // Optional, but used for defining smart contract creation and interaction.
-                chainId: '0x5', // Used to prevent transaction reuse across blockchains. Auto-filled by MetaMask.
-            };
+            try {
+                return !(await hexHeadsContract.methods.minted(bigInt(address.slice(2), 16).toString()).call())
+            } catch {
+                return undefined
+            }
         }
 
         async function claim() {
-            const transaction = {
-                to: '0xb3fcc6fd04a4ca8d3500fe655ce039f1b4ee43b5', // Required except during contract publications.
-                from: address,
-                value: '0x00',
-                data:
-                    `0x6a627842000000000000000000000000${address.slice(2)}`, // Optional, but used for defining smart contract creation and interaction.
-                chainId: '0x5', // Used to prevent transaction reuse across blockchains. Auto-filled by MetaMask.
-            };
-
-            const txHash = await ethereum.request({
-                method: 'eth_sendTransaction',
-                params: [transaction],
-            });
-            console.log(txHash);
+            document.getElementById("donation-block").remove()
+            document.getElementById("claim-button").remove()
+            claimElement.innerHTML = `
+                <div>Onchain magic is happening, wait for it...</div>
+            `
+            try {
+                await hexHeadsContract.methods.mint(address).send({from: address, value: (web3.utils.toWei(donationAmount.toString()))})
+                claimElement.innerHTML = `<div>Yay, all done! Enjoy your HexHead!</div>`
+            } catch (e) {
+                console.log(e)
+                await updateClaim()
+            }
         }
 
         async function connectMetaMask() {
             if (typeof window.ethereum !== 'undefined') {
                 ethereum = window.ethereum;
+                web3 = new Web3(window.ethereum);
+                hexHeadsContract = new web3.eth.Contract(contractABI, contractAddress);
                 let accounts = await ethereum.request({ method: 'eth_requestAccounts' });
                 address = accounts[0];
                 onWalletSwitch();
@@ -117,8 +171,8 @@
 
         function onWalletSwitch() {
             updateHeader();
-            updateClaim();
             updateJpeg();
+            updateClaim();
         }
 
         function updateHeader() {
@@ -134,14 +188,67 @@
             `;
         }
 
-        function updateClaim() {
+        let donationAmount = 0
+        async function updateDonation() {
+            donationAmount = (document.getElementById("donation")).value
+
+            const claimButtonDOM = (document.getElementById("claim-button"))
+            if (claimButtonDOM === null) return;
+
+            if (donationAmount >= primePrice) {
+                claimButtonDOM.hidden = false;
+                claimButtonDOM.innerText = "Mint Prime!"
+            } else if (donationAmount === "" || donationAmount === "0") {
+                donationAmount = "0"
+                claimButtonDOM.hidden = false;
+                claimButtonDOM.innerText = "Claim for free!"
+            } else {
+                claimButtonDOM.hidden = true;
+            }
+        }
+
+        async function updateClaim() {
+
+            primePrice = web3.utils.fromWei(await hexHeadsContract.methods.primePrice().call());
+            primePriceDOM.innerText = primePrice;
+
             if (!address) {
                 claimElement.innerHTML = `<p style="padding-top: 20px">Connect wallet to reveal yours!</p>`
                 return
             }
-            claimElement.innerHTML = `
-                <div class="button" onclick="claim()" style="margin-top: 20px">Claim for free</div>
-            `
+
+            const available = await claimable()
+            if(available) {
+                try {
+                    const balance = web3.utils.fromWei((await web3.eth.getBalance(address)))
+                    donationAmount = balance/100
+                    if (donationAmount < primePrice) {
+                        if (balance > donationAmount) {
+                            donationAmount = primePrice
+                        } else donationAmount = 0;
+                    }
+                } catch {
+                    donationAmount = 0
+                }
+                console.log(donationAmount >= primePrice)
+                claimElement.innerHTML = `
+                    <div id="donation-block">
+                        <div style="padding-bottom: 10px;">Prime min donation: ${primePrice} ETH<br>Enter 0 to claim this NFT for free with Observer role!</div>
+                        ETH <input type="number" id="donation" onkeyup="updateDonation()" value="${donationAmount}" placeholder="0">
+                    </div>
+                    <div class="button" id="claim-button" hidden onclick="claim()" style="margin-top: 20px"></div>
+                `
+                await updateDonation();
+            } else if (available === false) {
+                claimElement.innerHTML = `
+                    <div style="margin-top: 20px">Claimed!</div>
+                `
+            } else {
+                claimElement.innerHTML = `
+                    <div style="margin-top: 20px">Error while interacting with blockchain :(</div>
+                `
+            }
+
         }
 
         function updateJpeg() {
@@ -158,18 +265,37 @@
 
     <style>
 
+        body {
+            padding-bottom: 50px;
+        }
+
         .preview > div > img {
             width: 35vw;
             height: 35vw;
         }
 
-        canvas {
+        #jpeg > img {
+            width: 35vw;
+            height: 35vw;
+        }
+
+        #jpeg > canvas {
             width: 35vw;
             height: 35vw;
             box-shadow: 5px 5px 43px 0px rgba(0,0,0,0.75);
             -webkit-box-shadow: 5px 5px 43px 0px rgba(0,0,0,0.75);
             -moz-box-shadow: 5px 5px 43px 0px rgba(0,0,0,0.75);
         }
+
+        .blue-link {
+            color: #249fde;
+            text-decoration: underline;
+        }
+
+        .blue-link:hover {
+            color: royalblue;
+        }
+
     </style>
 
 </body>

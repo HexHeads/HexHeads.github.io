@@ -21,7 +21,7 @@ function buildTraits(address) {
         }
         traits.push(trait)
     }
-    console.log(traits)
+    // console.log(traits)
     return traits
 }
 
