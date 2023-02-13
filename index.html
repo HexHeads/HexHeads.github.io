@@ -27,162 +27,17 @@
                 <h1>Under construction...</h1>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12" style="text-align: center;">
+                <div style="text-align: center; padding: 20px 0 20px 0;">
+                    <a class="button" href="https://discord.gg/TuDAJfnw" target="_blank">
+                        Join Discord to become an Early Bird
+                    </a>
+                </div>
+            </div>
+        </div>
+
     </div>
-
-    <script>
-        // Vanilla JS!!!
-
-        //* Elements *//
-        const claimElement = document.getElementById("claimElement")
-        const primePriceDOM = document.getElementById("primePrice")
-        const metamask = document.getElementById("metamask");
-        const jpeg = document.getElementById("jpeg")
-
-        //* Web3 *//
-        let ethereum
-        let address
-        let web3 = undefined
-        let hexHeadsContract = undefined
-
-        let primePrice = "...";
-
-        async function claimable() {
-            try {
-                return !(await hexHeadsContract.methods.minted(bigInt(address.slice(2), 16).toString()).call())
-            } catch {
-                return undefined
-            }
-        }
-
-        async function claim() {
-            document.getElementById("donation-block").remove()
-            document.getElementById("claim-button").remove()
-            claimElement.innerHTML = `
-                <div>Onchain magic is happening, wait for it...</div>
-            `
-            try {
-                await hexHeadsContract.methods.mint(address).send({from: address, value: (web3.utils.toWei(donationAmount.toString()))})
-                claimElement.innerHTML = `<div>Yay, all done! Enjoy your HexHead!</div>`
-            } catch (e) {
-                console.log(e)
-                await updateClaim()
-            }
-        }
-
-        async function connectMetaMask() {
-            if (typeof window.ethereum !== 'undefined') {
-                ethereum = window.ethereum;
-                web3 = new Web3(window.ethereum);
-                hexHeadsContract = new web3.eth.Contract(contractABI, contractAddress);
-                let accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-                address = accounts[0];
-                onWalletSwitch();
-
-                ethereum.on('accountsChanged', function (accounts) {
-                    address = accounts[0];
-                    onWalletSwitch()
-                });
-            } else {
-                console.log("Install MetaMask")
-            }
-        }
-        connectMetaMask()
-
-        //* UI Updates *//
-
-        function onWalletSwitch() {
-            updateHeader();
-            updateJpeg();
-            updateClaim();
-        }
-
-        function updateHeader() {
-            if (!address) {
-                metamask.innerHTML = `<div class="button" onclick="connectMetaMask()">Connect Metamask</div>`;
-                return
-            }
-            metamask.innerHTML = `
-                <div
-                    onclick="connectMetaMask()"
-                    style="padding-top: 5px"
-                >${address}</div>
-            `;
-        }
-
-        let donationAmount = 0
-        async function updateDonation() {
-            donationAmount = (document.getElementById("donation")).value
-
-            const claimButtonDOM = (document.getElementById("claim-button"))
-            if (claimButtonDOM === null) return;
-
-            if (donationAmount >= primePrice) {
-                claimButtonDOM.hidden = false;
-                claimButtonDOM.innerText = "Mint Prime!"
-            } else if (donationAmount === "" || donationAmount === "0") {
-                donationAmount = "0"
-                claimButtonDOM.hidden = false;
-                claimButtonDOM.innerText = "Claim for free!"
-            } else {
-                claimButtonDOM.hidden = true;
-            }
-        }
-
-        async function updateClaim() {
-
-            primePrice = web3.utils.fromWei(await hexHeadsContract.methods.primePrice().call());
-            primePriceDOM.innerText = primePrice;
-
-            if (!address) {
-                claimElement.innerHTML = `<p style="padding-top: 20px">Connect wallet to reveal yours!</p>`
-                return
-            }
-
-            const available = await claimable()
-            if(available) {
-                try {
-                    const balance = web3.utils.fromWei((await web3.eth.getBalance(address)))
-                    donationAmount = balance/100
-                    if (donationAmount < primePrice) {
-                        if (balance > donationAmount) {
-                            donationAmount = primePrice
-                        } else donationAmount = 0;
-                    }
-                } catch {
-                    donationAmount = 0
-                }
-                console.log(donationAmount >= primePrice)
-                claimElement.innerHTML = `
-                    <div id="donation-block">
-                        <div style="padding-bottom: 10px;">Prime min donation: ${primePrice} ETH<br>Enter 0 to claim this NFT for free with Observer role!</div>
-                        ETH <input type="number" id="donation" onkeyup="updateDonation()" value="${donationAmount}" placeholder="0">
-                    </div>
-                    <div class="button" id="claim-button" hidden onclick="claim()" style="margin-top: 20px"></div>
-                `
-                await updateDonation();
-            } else if (available === false) {
-                claimElement.innerHTML = `
-                    <div style="margin-top: 20px">Claimed!</div>
-                `
-            } else {
-                claimElement.innerHTML = `
-                    <div style="margin-top: 20px">Error while interacting with blockchain :(</div>
-                `
-            }
-
-        }
-
-        function updateJpeg() {
-            if (!address) {
-                jpeg.innerHTML = `<img src="./img/showreel.gif"/>`
-                return
-            }
-            jpeg.innerHTML = `
-                <canvas id="canvas" width="32" height="32"></canvas>
-            `
-            render(address)
-        }
-    </script>
 
     <style>
 
