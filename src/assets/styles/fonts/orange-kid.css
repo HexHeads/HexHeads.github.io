@@ -1,0 +1,7 @@
+@font-face {
+    font-family: 'orange-kid';
+    src: url('../fonts/orange-kid.woff2') format('woff2'),
+    url('../fonts/orange-kid.woff') format('woff'),
+    url('../fonts/orange-kid.ttf') format('truetype'),
+    url('../fonts/orange-kid.otf') format('otf');
+}

@@ -1,0 +1,33 @@
+@screen sm {
+    .text-xxl {
+        font-size: 40px;
+        line-height: 48px;
+    }
+
+    .text-xl {
+        font-size: 40px;
+        line-height: 48px;
+    }
+
+    .text-lg {
+        font-size: 32px;
+        line-height: 38px;
+    }
+
+    .text-md {
+        font-size: 26px;
+        line-height: 28px;
+    }
+
+    .text-base {
+        font-size: 20px;
+        line-height: 26px;
+    }
+}
+
+/*sm: ['16px', {lineHeight: '18px'}],*/
+/*base: ['30px', {lineHeight: '36px'}],*/
+/*md: ['32px', {lineHeight: '38px'}],*/
+/*lg: ['40px', {lineHeight: '48px'}],*/
+/*xl: ['48px', {lineHeight: '58px'}],*/
+/*xxl: ['60px', {lineHeight: '72px'}],*/

@@ -1,0 +1,48 @@
+.-preloader-dots {
+    @apply inset-0 absolute flex items-center justify-center;
+}
+
+.-preloader-dots:before {
+    @apply inset-0 absolute bg-white bg-opacity-70 block;
+    z-index: 1;
+    content: '';
+}
+
+.-preloader-dots:after {
+    content: '';
+    display: block;
+    position: relative;
+    left: -9999px;
+    width: 10px;
+    height: 10px;
+    z-index: 2;
+    background-color: theme('colors.primary.500');
+    color: theme('colors.primary.500');
+    box-shadow: 9984px 0 0 0 theme('colors.primary.500'), 9999px 0 0 0 theme('colors.primary.500'), 10014px 0 0 0 theme('colors.primary.500');
+    animation: dot-typing 1s infinite linear;
+}
+
+@keyframes dot-typing {
+    0% {
+        box-shadow: 9984px 0 0 0 theme('colors.primary.500'), 9999px 0 0 0 theme('colors.primary.500'), 10014px 0 0 0 theme('colors.primary.500');
+    }
+    16.667% {
+        box-shadow: 9984px -10px 0 0 theme('colors.primary.500'), 9999px 0 0 0 theme('colors.primary.500'), 10014px 0 0 0 theme('colors.primary.500');
+    }
+    33.333% {
+        box-shadow: 9984px 0 0 0 theme('colors.primary.500'), 9999px 0 0 0 theme('colors.primary.500'), 10014px 0 0 0 theme('colors.primary.500');
+    }
+    50% {
+        box-shadow: 9984px 0 0 0 theme('colors.primary.500'), 9999px -10px 0 0 theme('colors.primary.500'), 10014px 0 0 0 theme('colors.primary.500');
+    }
+    66.667% {
+        box-shadow: 9984px 0 0 0 theme('colors.primary.500'), 9999px 0 0 0 theme('colors.primary.500'), 10014px 0 0 0 theme('colors.primary.500');
+    }
+    83.333% {
+        box-shadow: 9984px 0 0 0 theme('colors.primary.500'), 9999px 0 0 0 theme('colors.primary.500'), 10014px -10px 0 0 theme('colors.primary.500');
+    }
+    100% {
+        box-shadow: 9984px 0 0 0 theme('colors.primary.500'), 9999px 0 0 0 theme('colors.primary.500'), 10014px 0 0 0 theme('colors.primary.500');
+    }
+}
+
