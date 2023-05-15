@@ -5,12 +5,19 @@
                 <div class="drop-shadow-[0_0_15px_rgba(0,_0,_0,_0.25)]">
                     <HexHead
                         :address="address"
+                        :placeholder="true"
                         size="xl"
                     />
                 </div>
             </div>
             <div class="flex flex-col flex-grow px-12 mt-12 relative">
-                <div v-if="isMinted === null" class="-preloader"></div>
+                <div v-if="!address">
+                    <div class="text-xxl mb-6">
+                        Connect MetaMask
+                        <br>to reveal your HexHead
+                    </div>
+                </div>
+                <div v-else-if="isMinted === null" class="-preloader"></div>
                 <template v-else-if="isMinted">
                     <div class="text-xxl mb-6">
                         Welcome back,
@@ -24,16 +31,17 @@
                             Continue your journey:
                         </div>
                         <div class="flex items-center md:justify-center">
+<!--                            <ActionLink-->
+<!--                                theme="secondary"-->
+<!--                                href="#"-->
+<!--                            >-->
+<!--                                Dashboard-->
+<!--                            </ActionLink>-->
+<!--                            <div class="mx-3">|</div>-->
                             <ActionLink
                                 theme="secondary"
-                                href="#"
-                            >
-                                Dashboard
-                            </ActionLink>
-                            <div class="mx-3">|</div>
-                            <ActionLink
-                                theme="secondary"
-                                href="#"
+                                href="https://discord.gg/HCHQTg7m"
+                                target="_blank"
                             >
                                 Discord
                             </ActionLink>
@@ -75,16 +83,16 @@
                         Prime HexHead is minted.
                     </div>
                     <div class="flex justify-between items-end">
-                        <div class="flex-grow mr-4">
-                            <TextField
-                                v-model="formData.hexHeadName"
-                                title="HexHead name"
-                                view="default"
-                                placeholder="HexHead"
-                                :error="formErrors.hexHeadName"
-                            />
-                        </div>
-                        <div>
+<!--                        <div class="flex-grow mr-4">-->
+<!--                            <TextField-->
+<!--                                v-model="formData.hexHeadName"-->
+<!--                                title="HexHead name"-->
+<!--                                view="default"-->
+<!--                                placeholder="HexHead"-->
+<!--                                :error="formErrors.hexHeadName"-->
+<!--                            />-->
+<!--                        </div>-->
+                        <div class="w-full">
                             <BaseButton
                                 class="w-full"
                                 size="xl"
@@ -123,14 +131,13 @@
 
 <script setup>
 import { computed, onBeforeMount, ref } from 'vue';
+import { ethers } from 'ethers';
 import BaseImage from '@/components/BaseImage/BaseImage';
 import HexHead from '@/components/HexHead/HexHead';
 import BaseButton from '@/components/BaseButton/BaseButton';
 import ActionLink from '@/components/ActionLink/ActionLink';
 import BaseLabel from '@/components/BaseLabel/BaseLabel';
 import TextField from '@/components/Form/TextField/TextField';
-import OperatorService from '@/services/OperatorService';
-import NamesService from '@/services/NamesService';
 import HexHeadsService from '@/services/HexHeadsService';
 import useForm from '@/composables/useForm';
 import emitter from '@/plugins/mitt';
@@ -155,9 +162,9 @@ async function claim() {
     const name = formData.value.hexHeadName !== 'HexHead' ? formData.value.hexHeadName : '';
     isClaiming.value = true;
 
-    const [isClaimed, claimedError] = await HexHeadsService.ownerOf(name);
+    const [_, claimedError] = await HexHeadsService.ownerOf(address.value);
 
-    if (isClaimed === ('0x' + '0'.repeat(40))) {
+    if (!claimedError) {
         formErrors.value.hexHeadName = 'This name is taken';
         isClaiming.value = false;
 
@@ -165,7 +172,7 @@ async function claim() {
     }
 
 
-    const [mintTrx, minterError] = await HexHeadsService.mint(name);
+    const [mintTrx, minterError] = await HexHeadsService.mint();
 
     if (!minterError) {
         isMinted.value = true;
@@ -194,13 +201,9 @@ async function checkAndSetMint() {
         return;
     }
 
-    console.log(address.value);
+    const [mintedAddress] = await HexHeadsService.ownerOf(address.value);
 
-    const [mintedAddress] = await HexHeadsService.ownerOf(parseInt(address.value), 16);
-
-    console.log(isMinted.value);
-
-    isMinted.value = mintedAddress !== ('0x' + '0'.repeat(40));
+    isMinted.value = !!mintedAddress;
 }
 
 

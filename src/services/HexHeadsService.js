@@ -9,13 +9,13 @@ export default class HexHeadsService {
         });
     }
 
-    static async mint(name) {
+    static async mint() {
         return API.send({
             contractName: 'hexHeads',
             methodName: 'mint',
             needWait: true,
             needReceipt: true,
-            params: [name]
+            params: []
         });
     }
 }

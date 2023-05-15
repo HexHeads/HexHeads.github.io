@@ -30,7 +30,6 @@ class API {
     }
 
     static async send(props) {
-        console.log(props);
         try {
             const contract = props.contractAddress ? new ethers.Contract(props.contractAddress, props.contractABI, API.provider) : API.contracts[props.contractName];
             const signer = await API.getSigner();

@@ -21,7 +21,7 @@
                     <div :class="classes.navItem">
                         <ActionLink
                             v-if="!item.active"
-                            :class="classes.navLink"
+                            :class="[classes.navLink, item.to === '#' && 'pointer-events-none opacity-30']"
                             :theme="!item.theme ? 'black' : ''"
                             :to="item.to"
                             :theme-settings="{
@@ -115,12 +115,12 @@ const navItems = computed(() => [
     },
     {
         title: 'Scan',
-        to: 'scan',
+        to: '#',//'scan',
         active: route.name === 'scan'
     },
     {
         title: 'Dashboard',
-        to: { name: 'dashboard' },
+        to: '#',//{ name: 'dashboard' },
         active: route.name === 'dashboard'
     },
     {
@@ -136,7 +136,7 @@ const navItems = computed(() => [
     },
     {
         title: 'Collection',
-        to: { name: 'collection' },
+        to: '#',//{ name: 'collection' },
         active: route.name === 'collection'
     },
 ]);
