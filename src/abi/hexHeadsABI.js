@@ -2,14 +2,14 @@ export default [
     {
         "inputs": [
             {
-                "internalType": "contract INameRegistry",
-                "name": "_nameRegistry",
+                "internalType": "address",
+                "name": "operator_",
                 "type": "address"
             },
             {
-                "internalType": "contract IMetadata",
-                "name": "_metadataProvider",
-                "type": "address"
+                "internalType": "string",
+                "name": "baseURI_",
+                "type": "string"
             }
         ],
         "stateMutability": "nonpayable",
@@ -149,11 +149,6 @@ export default [
     {
         "inputs": [
             {
-                "internalType": "address",
-                "name": "from",
-                "type": "address"
-            },
-            {
                 "internalType": "uint256",
                 "name": "id",
                 "type": "uint256"
@@ -172,7 +167,7 @@ export default [
                 "type": "uint256"
             }
         ],
-        "name": "burned",
+        "name": "burnt",
         "outputs": [
             {
                 "internalType": "bool",
@@ -240,29 +235,10 @@ export default [
         "type": "function"
     },
     {
-        "inputs": [
-            {
-                "internalType": "string",
-                "name": "name",
-                "type": "string"
-            }
-        ],
+        "inputs": [],
         "name": "mint",
         "outputs": [],
         "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "mintedTotal",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
         "type": "function"
     },
     {
@@ -273,6 +249,19 @@ export default [
                 "internalType": "string",
                 "name": "",
                 "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "operator",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
             }
         ],
         "stateMutability": "view",
@@ -382,12 +371,25 @@ export default [
     {
         "inputs": [
             {
-                "internalType": "contract IMetadata",
-                "name": "_metadataProvider",
+                "internalType": "string",
+                "name": "baseURI",
+                "type": "string"
+            }
+        ],
+        "name": "setBaseUri",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "operator_",
                 "type": "address"
             }
         ],
-        "name": "setMetadataProvider",
+        "name": "setOperator",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"

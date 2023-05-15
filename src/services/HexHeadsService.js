@@ -8,4 +8,14 @@ export default class HexHeadsService {
             params: [address]
         });
     }
+
+    static async mint(name) {
+        return API.send({
+            contractName: 'hexHeads',
+            methodName: 'mint',
+            needWait: true,
+            needReceipt: true,
+            params: [name]
+        });
+    }
 }

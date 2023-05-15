@@ -1,10 +1,6 @@
 import { ethers } from 'ethers'
 import { CPromise } from 'c-promise2';
-import nameRegistryABI from '@/abi/nameRegistryABI';
-import upgradeABI from '@/abi/upgradeABI';
 import hexHeadsABI from '@/abi/hexHeadsABI';
-import operatorABI from '@/abi/operatorABI';
-import primeABI from '@/abi/primeABI';
 
 class API {
     static provider;
@@ -21,11 +17,7 @@ class API {
 
     static get contracts() {
         return {
-            nameRegistry: new ethers.Contract(process.env.VUE_APP_NAMES_ADDRESS, nameRegistryABI, API.provider),
             hexHeads: new ethers.Contract(process.env.VUE_APP_HEXHEADS_ADDRESS, hexHeadsABI, API.provider),
-            operator: new ethers.Contract(process.env.VUE_APP_OPERATOR_ADDRESS, operatorABI, API.provider),
-            upgrade: new ethers.Contract(process.env.VUE_APP_UPGRADE_ADDRESS, upgradeABI, API.provider),
-            prime: new ethers.Contract(process.env.VUE_APP_PRIME_ADDRESS, primeABI, API.provider),
         };
     }
 

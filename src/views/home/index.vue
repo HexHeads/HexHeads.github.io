@@ -15,7 +15,9 @@
                     <div class="text-xxl mb-6">
                         Welcome back,
                         <br>
-                        <span class="text-primary-500">k0rean_rand0m.eth</span>!
+                        <span class="text-primary-500">
+                            {{ fullName }}
+                        </span>!
                     </div>
                     <div class="text-md mb-6">
                         <div>
@@ -153,9 +155,9 @@ async function claim() {
     const name = formData.value.hexHeadName !== 'HexHead' ? formData.value.hexHeadName : '';
     isClaiming.value = true;
 
-    const [isClaimed, claimedError] = await NamesService.claimed(name);
+    const [isClaimed, claimedError] = await HexHeadsService.ownerOf(name);
 
-    if (isClaimed) {
+    if (isClaimed === ('0x' + '0'.repeat(40))) {
         formErrors.value.hexHeadName = 'This name is taken';
         isClaiming.value = false;
 
@@ -163,7 +165,7 @@ async function claim() {
     }
 
 
-    const [mintTrx, minterError] = await OperatorService.mint(name);
+    const [mintTrx, minterError] = await HexHeadsService.mint(name);
 
     if (!minterError) {
         isMinted.value = true;
@@ -192,8 +194,17 @@ async function checkAndSetMint() {
         return;
     }
 
-    const [mintedAddress] = await HexHeadsService.ownerOf(address.value);
+    console.log(address.value);
+
+    const [mintedAddress] = await HexHeadsService.ownerOf(parseInt(address.value), 16);
+
+    console.log(isMinted.value);
 
     isMinted.value = mintedAddress !== ('0x' + '0'.repeat(40));
 }
+
+
+// FULL NAME
+
+const fullName = computed(() => store.getters['wallet/addressOrName']);
 </script>
