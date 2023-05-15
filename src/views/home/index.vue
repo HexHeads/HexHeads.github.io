@@ -5,7 +5,7 @@
                 <div class="drop-shadow-[0_0_15px_rgba(0,_0,_0,_0.25)]">
                     <HexHead
                         :address="address"
-                        :placeholder="true"
+                        :placeholder="!address"
                         size="xl"
                     />
                 </div>
