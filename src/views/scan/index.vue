@@ -45,15 +45,27 @@
                 >
                     <div
                         class="w-1/2 px-[20px] mt-6"
-                        v-for="(item, index) in traits"
-                        :key="index"
+                        v-for="(item, key) in traits"
+                        :key="key"
                     >
-                        <div class="h-[72px] border-2 border-black text-md text-center px-4">
-                            <div class="text-primary-500">
+                        <div class="border-2 border-black text-md text-center px-4 py-2">
+                            <div class="text-primary-500 mb-2">
                                 {{ item.title }}
                             </div>
-                            <div class="-mt-1.5">
+                            <div
+                                v-if="['decorationColor', 'backgroundColor'].includes(key)"
+                                class="-mt-1.5"
+                            >
                                 {{ item.value || '???' }}
+                            </div>
+                            <div
+                                v-else
+                                class="h-[32px] w-[32px] mx-auto bg-no-repeat"
+                                :class="{
+                                    'scale-[1.8]': ['extra', 'head', 'mouth', 'eyes'].includes(key)
+                                }"
+                                :style="`background-image:url(${ require(`@/assets/images/hexheads/${ item.sprite }.png`) });background-position:${ -(item.value - (Math.floor((item.value / 16))) * 16) * 32 }px ${ Math.floor((item.value / 16)) * -32 }px;`"
+                            >
                             </div>
                         </div>
                     </div>
@@ -161,7 +173,12 @@ function setTraits() {
     if (address.value) {
         const items = generateTraits(address.value);
 
+        console.log(items);
+
         traits.value = getTraitsByIndexex(items);
+
+        console.log(traits.value);
+
     }
 }
 

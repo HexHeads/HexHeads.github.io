@@ -2,35 +2,49 @@ import traits from '@/models/traits';
 
 function getTraits() {
     return {
-        bubbleColor: {
-            title: 'Bubble Color',
+        backgroundColor: {
+            title: 'Background Color',
             items: traits[0]
         },
-        bubble: {
-            title: 'Bubble',
-            items: traits[1],
-            sprite: 1
+        decorationColor: {
+            title: 'Decoration Color',
+            items: traits[1]
         },
-        accessory: {
-            title: 'Accessory',
-            items: traits[3],
+        decoration: {
+            title: 'Decoration',
+            items: traits[2],
             sprite: 1
         },
         head: {
             title: 'Head',
-            items: traits[2],
+            items: traits[3],
             sprite: 3
         },
         mouth: {
             title: 'Mouth',
-            items: traits[5],
+            items: traits[4],
             sprite: 4
         },
         eyes: {
             title: 'Eyes',
-            items: traits[4],
+            items: traits[5],
             sprite: 5
         },
+        hair: {
+            title: 'Hair',
+            items: traits[6],
+            sprite: 6
+        },
+        hat: {
+            title: 'Hat',
+            items: traits[7],
+            sprite: 7
+        },
+        extra: {
+            title: 'Extra',
+            items: traits[8],
+            sprite: 8
+        }
     }
 }
 
@@ -50,14 +64,9 @@ function getTraitsForForm() {
 
 function getTraitsByIndexex(_traitsIndexes) {
     const indexes = [..._traitsIndexes];
-    const color = indexes.shift();
     const traits = getTraits();
     let index = 0;
     const result = {
-        background: {
-            title: 'Background',
-            value: color
-        }
     };
 
     for (let key in traits) {

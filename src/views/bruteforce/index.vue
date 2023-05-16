@@ -20,14 +20,14 @@
                     >
                         <div
                             class="h-[74px] px-4 bg-white border border-black cursor-pointer flex items-center"
-                            @click="openChoice(item, key, key === 'bubbleColor' && 'color')"
+                            @click="openChoice(item, key,  ['backgroundColor', 'decorationColor'].includes(key) && 'color')"
                         >
                             {{ item.title }}
                             <div
-                                v-if="key !== 'bubbleColor' && formData.traits[key] !== ''"
+                                v-if="!['decorationColor', 'backgroundColor'].includes(key) && formData.traits[key] !== ''"
                                 class="h-[32px] w-[32px] ml-4 bg-no-repeat"
                                 :class="{
-                                    'scale-[1.8]': ['accessory', 'head', 'mouth', 'eyes'].includes(key)
+                                    'scale-[1.8]': ['extra', 'head', 'mouth', 'eyes'].includes(key)
                                 }"
                                 :style="`background-image:url(${ require(`@/assets/images/hexheads/${ item.sprite }.png`) });background-position:${ -(formData.traits[key] - (Math.floor((formData.traits[key] / 16))) * 16) * 32 }px ${ Math.floor((formData.traits[key] / 16)) * -32 }px;`"
                             >

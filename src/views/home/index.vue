@@ -214,7 +214,8 @@ async function checkAndSetMint() {
         return;
     }
 
-    const [mintedAddress] = await HexHeadsService.ownerOf(BigInt(address.value).toString());
+    const [mintedAddress] = await HexHeadsService.ownerOf(address.value);
+    //BigInt(address.value).toString()
 
     isMinted.value = !!mintedAddress;
 }
