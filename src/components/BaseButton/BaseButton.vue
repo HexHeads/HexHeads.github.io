@@ -209,7 +209,7 @@ const buttonAttrs = computed(() => {
 
 // ROOT
 
-const root = ref<HTMLElement | null>(null);
+const root = ref(null);
 
 defineExpose({
     root

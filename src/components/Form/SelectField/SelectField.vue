@@ -97,7 +97,7 @@ const emit = defineEmits(['update:modelValue']);
 
 // COMMON:select
 
-const select = ref<InstanceType<typeof VueSelect> | null>(null);
+const select = ref(null);
 
 function close(): void {
     select.value.open = false;
@@ -199,7 +199,7 @@ const value = computed({
 
 // OPEN
 
-const main = ref<HTMLElement>();
+const main = ref();
 
 async function onOpen() {
     await nextTick();
