@@ -9,7 +9,6 @@ export default [
         "#EAE2B2", "#C7EAB2", "#B5D5A8", "#E0EAB2",
         "#EAD2B2", "#B9E5C7", "#B9E5DD"
     ],
-    [...Array(256).keys()], // 183
     [
         "#E3AABE", "#ADC886", "#C9B0D4", "#E3AAD0",
         "#9EDB83", "#92B8D8", "#86C8C4", "#B8C292",
@@ -20,10 +19,11 @@ export default [
         "#EAE2B2", "#C7EAB2", "#B5D5A8", "#E0EAB2",
         "#EAD2B2", "#B9E5C7", "#B9E5DD"
     ],
-    [...Array(30).keys()], // 3 - Head
-    [...Array(147).keys()], // 4 - Mouth
-    [...Array(128).keys()], // 5 - Eyes
-    [...Array(91).keys()], // 6 - Hair
-    [...Array(109).keys()], // 7 - Hat
-    [...Array(25).keys()], // 8 - Extra
+    [...Array(256).keys()], // 1 - Decoration
+    [...Array(30).keys()], // 2 - Head
+    [...Array(256).keys()], // 3 - Mouth
+    [...Array(256).keys()], // 4 - Eyes
+    [...Array(256).keys()], // 5 - Hair
+    [...Array(256).keys()], // 6 - Hat
+    [...Array(26).keys()], // 7 - Extra
 ];

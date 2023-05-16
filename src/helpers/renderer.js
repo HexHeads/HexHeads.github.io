@@ -16,10 +16,21 @@ function generateAddress() {
 function generateTraits(idHex) {
     const traits = [];
     idHex = idHex.slice(2);
+    const seed = Number("0x"+idHex.slice(36, 40));
     for (let i = 0; i < metadata.length; i++) { // TODO Change when adding a new layer
-        traits.push(Number("0x" + idHex.slice(i * 4, i * 4 + 4)) % metadata[i].length);
+        traits.push((Number("0x" + idHex.slice(i*4, i*4+4)) + seed) % metadata[i].length);
     }
-    console.log(traits)
+
+    // 20% without hat
+    if (seed % 5 === 0) {
+        traits[7] = -1
+    }
+
+    // 75% without extra
+    if (seed % 4 !== 0) {
+        traits[8] = -1
+    }
+
     return traits;
 }
 
@@ -50,9 +61,8 @@ function drawBackground(ctx, id) {
 }
 
 function drawDecoration(ctx, traits) {
-    const id = traits[1];
-    const color_id = traits[2];
-    const color = metadata[2][color_id];
+    const id = traits[2];
+    const color = metadata[1][traits[1]];
 
     if (id !== undefined && color !== undefined) {
 
