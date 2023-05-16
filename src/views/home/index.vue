@@ -72,15 +72,15 @@
                         </BaseLabel>
                     </div>
                     <div class="text-md my-auto">
-                        Choose Prime Level of your HexHead and a name.
+                        Claim your HexHead with Observer role for free!
                         <br>
-                        Current price per level is 0.1 Eth.
-                        <br>
-                        Each Prime Level gives this HexHead the same amount of voting power in HexHeads DAO.
-                        <br>
-                        The price is growing by 0.001 Eth each time a new
-                        <br>
-                        Prime HexHead is minted.
+                        Join our <ActionLink
+                        theme="secondary"
+                        href="https://discord.gg/HCHQTg7m"
+                        target="_blank"
+                    >
+                        Discord
+                    </ActionLink> to become a part of the biggest Ethereum community and don't miss the upcoming "Upgrades" drop.
                     </div>
                     <div class="flex justify-between items-end">
 <!--                        <div class="flex-grow mr-4">-->
@@ -121,7 +121,13 @@
                 <br>
                 There are two roles: Observer and Prime.
                 <br><br>
-                Fell free to claim your NFT for free, join our <ActionLink theme="secondary">Discord</ActionLink> and become an Observer.
+                Fell free to claim your NFT for free, join our <ActionLink
+                theme="secondary"
+                href="https://discord.gg/HCHQTg7m"
+                target="_blank"
+            >
+                Discord
+            </ActionLink> and become an Observer.
                 <br>
                 If you wish to access our private server, take a part in DAO voting and get all benefits, chase for the Prime role.
             </div>
