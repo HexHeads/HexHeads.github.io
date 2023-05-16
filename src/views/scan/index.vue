@@ -21,15 +21,21 @@
                     v-if="resultAddress"
                 >
                     <div class="mb-3">
-                        Claimed on 12 Jan 2023 by <ActionLink theme="secondary" href="#">0x1CcA...C912</ActionLink>
+                        <template v-if="owner">
+                            Claimed by <ActionLink theme="secondary" href="#">{{ cutAddress(owner) }}</ActionLink>
+                        </template>
+                        <template v-else>
+                            Not claimed yet
+                        </template>
+<!--                        Claimed on 12 Jan 2023 by <ActionLink theme="secondary" href="#">0x1CcA...C912</ActionLink>-->
                     </div>
                     <div class="flex justify-between">
                         <div class="mb-6">
-                            Role: <span class="text-primary-500">Prime</span>
+                            Role: <span class="text-primary-500">Observer</span>
                         </div>
-                        <div>
-                            <ActionLink theme="secondary">OpenSea</ActionLink> |  <ActionLink theme="secondary">LooksRare</ActionLink> |  <ActionLink theme="secondary">Frenly</ActionLink>
-                        </div>
+<!--                        <div>-->
+<!--                            <ActionLink theme="secondary">OpenSea</ActionLink> |  <ActionLink theme="secondary">LooksRare</ActionLink> |  <ActionLink theme="secondary">Frenly</ActionLink>-->
+<!--                        </div>-->
                     </div>
                 </template>
 
@@ -69,7 +75,13 @@
                 <br>
                 There are two roles: Observer and Prime.
                 <br><br>
-                Fell free to claim your NFT for free, join our <ActionLink theme="secondary">Discord</ActionLink> and become an Observer.
+                Fell free to claim your NFT for free, join our <ActionLink
+                theme="secondary"
+                href="https://discord.gg/HCHQTg7m"
+                target="_blank"
+            >
+                Discord
+            </ActionLink> and become an Observer.
                 <br>
                 If you wish to access our private server, take a part in DAO voting and get all benefits, chase for the Prime role.
             </div>
@@ -89,6 +101,8 @@ import API from '@/helpers/api';
 
 import { getTraitsByIndexex } from '@/helpers/getTraits';
 import { generateTraits } from '@/helpers/renderer';
+import cutAddress from '@/helpers/cutAddress';
+import HexHeadsService from '@/services/HexHeadsService';
 
 // META
 
@@ -125,10 +139,12 @@ async function search() {
             }
         }
 
-        const items = generateTraits(resultAddress);
 
-        traits.value = getTraitsByIndexex(items);
         address.value = resultAddress;
+        setTraits();
+        if (resultAddress) {
+            await checkAndSetMint();
+        }
     } catch (e) {
         console.log(e);
         traits.value = {};
@@ -137,5 +153,34 @@ async function search() {
     isSearching.value = false;
 }
 
+setTraits();
+
 watch(field, searchDebounced);
+
+function setTraits() {
+    if (address.value) {
+        const items = generateTraits(address.value);
+
+        traits.value = getTraitsByIndexex(items);
+    }
+}
+
+
+// OWNER
+
+const owner = ref('');
+
+async function checkAndSetMint() {
+    owner.value = null;
+
+    if (!address.value) {
+        return;
+    }
+
+    const [mintedAddress] = await HexHeadsService.ownerOf(address.value);
+
+    owner.value = mintedAddress;
+}
+
+checkAndSetMint();
 </script>

@@ -6,6 +6,7 @@
                     <!--      :placeholder="!wasFound"              -->
                     <HexHead
                         :is-canvas="true"
+                        :placeholder="!formDataTraitsValues.filter(Boolean).length"
                         size="xl"
                     />
                 </div>

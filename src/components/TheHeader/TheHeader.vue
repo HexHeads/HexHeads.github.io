@@ -115,7 +115,7 @@ const navItems = computed(() => [
     },
     {
         title: 'Scan',
-        to: '#',//'scan',
+        to: { name: 'scan' },
         active: route.name === 'scan'
     },
     {
@@ -136,7 +136,7 @@ const navItems = computed(() => [
     },
     {
         title: 'Collection',
-        to: '#',//{ name: 'collection' },
+        to: { name: 'collection' },
         active: route.name === 'collection'
     },
 ]);

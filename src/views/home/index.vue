@@ -75,12 +75,19 @@
                         Claim your HexHead with Observer role for free!
                         <br>
                         Join our <ActionLink
-                        theme="secondary"
-                        href="https://discord.gg/HCHQTg7m"
-                        target="_blank"
-                    >
+                            theme="secondary"
+                            href="https://discord.gg/HCHQTg7m"
+                            target="_blank"
+                        >
                         Discord
-                    </ActionLink> to become a part of the biggest Ethereum community and don't miss the upcoming "Upgrades" drop.
+                        </ActionLink> to become a part of the biggest Ethereum community and don't miss the upcoming "Upgrades" drop.
+                        <br><br>
+                        Don't like yours? Wanna find the rare one? <br>Try <ActionLink
+                        theme="primary"
+                        :to="{ name: 'bruteforce' }"
+                    >
+                        Bruteforce
+                    </ActionLink> now!
                     </div>
                     <div class="flex justify-between items-end">
 <!--                        <div class="flex-grow mr-4">-->
@@ -207,7 +214,7 @@ async function checkAndSetMint() {
         return;
     }
 
-    const [mintedAddress] = await HexHeadsService.ownerOf(address.value);
+    const [mintedAddress] = await HexHeadsService.ownerOf(BigInt(address.value).toString());
 
     isMinted.value = !!mintedAddress;
 }
