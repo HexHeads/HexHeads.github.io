@@ -6,7 +6,7 @@
                     <!--      :placeholder="!wasFound"              -->
                     <HexHead
                         :is-canvas="true"
-                        :placeholder="!formDataTraitsValues.filter(Boolean).length"
+                        :placeholder="!formDataTraitsValues.filter(Boolean).length && !isBruteforcing"
                         size="xl"
                     />
                 </div>
@@ -208,13 +208,17 @@ function startBruteforce() {
 // OPEN CHOICE
 
 async function openChoice(item, key, type) {
-    const id = await open('BruteforceChoice', {
+    const resp = await open('BruteforceChoice', {
         title: item.title,
         items: item.items,
         type,
         spriteIndex: item.sprite
     });
 
-    formData.value.traits[key] = id;
+    if (resp === undefined) {
+        return;
+    }
+
+    formData.value.traits[key] = resp;
 }
 </script>
