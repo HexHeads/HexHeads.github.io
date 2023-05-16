@@ -33,9 +33,17 @@
                         <div class="mb-6">
                             Role: <span class="text-primary-500">Observer</span>
                         </div>
-<!--                        <div>-->
-<!--                            <ActionLink theme="secondary">OpenSea</ActionLink> |  <ActionLink theme="secondary">LooksRare</ActionLink> |  <ActionLink theme="secondary">Frenly</ActionLink>-->
-<!--                        </div>-->
+                        <div>
+                            <ActionLink
+                                v-if="opensea"
+                                theme="secondary"
+                                :href="opensea"
+                                target="_blank"
+                            >
+                                OpenSea
+                            </ActionLink>
+<!--                            |  <ActionLink theme="secondary">LooksRare</ActionLink> |  <ActionLink theme="secondary">Frenly</ActionLink>-->
+                        </div>
                     </div>
                 </template>
 
@@ -173,11 +181,7 @@ function setTraits() {
     if (address.value) {
         const items = generateTraits(address.value);
 
-        console.log(items);
-
         traits.value = getTraitsByIndexex(items);
-
-        console.log(traits.value);
 
     }
 }
@@ -200,4 +204,10 @@ async function checkAndSetMint() {
 }
 
 checkAndSetMint();
-</script>
+
+
+// OPENSEA LINK
+
+// eslint-disable-next-line no-undef
+const opensea = computed(() => owner.value ? `https://testnets.opensea.io/assets/mumbai/${ process.env.VUE_APP_HEXHEADS_ADDRESS }/${ BigInt(owner.value).toString() }` : '');
+</script >
