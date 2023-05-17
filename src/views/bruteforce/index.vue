@@ -157,6 +157,7 @@ const wasFound = ref(false);
 
 watch(formData.value.traits, () => {
     stop.value = true;
+    isBruteforcing.value = false;
     drawFromTraits(formDataTraitsValues.value);
 });
 
@@ -193,7 +194,7 @@ function startBruteforce() {
 
     drawFromTraits(actualTraits);
 
-    for(let i = 0; i <= 6; i++) {
+    for(let i = 0; i <= formDataTraitsValues.value.length; i++) {
         if (formDataTraitsValues.value[i] !== undefined && formDataTraitsValues.value[i] !== actualTraits[i]) {
             setTimeout(startBruteforce, 10)
             return;
