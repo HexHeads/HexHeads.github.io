@@ -3,11 +3,11 @@ import traits from '@/models/traits';
 function getTraits() {
     return {
         backgroundColor: {
-            title: 'Background Color',
+            title: 'Background color',
             items: traits[0]
         },
         decorationColor: {
-            title: 'Decoration Color',
+            title: 'Decoration color',
             items: traits[1]
         },
         decoration: {

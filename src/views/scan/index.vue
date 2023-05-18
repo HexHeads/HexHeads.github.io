@@ -22,7 +22,7 @@
                 >
                     <div class="mb-3">
                         <template v-if="owner">
-                            Claimed by <ActionLink theme="secondary" href="#">{{ cutAddress(owner) }}</ActionLink>
+                            Claimed by <ActionLink theme="secondary" :href="addressLink" target="_blank">{{ cutAddress(owner) }}</ActionLink>
                         </template>
                         <template v-else>
                             Not claimed yet
@@ -212,4 +212,6 @@ checkAndSetMint();
 
 // eslint-disable-next-line no-undef
 const opensea = computed(() => owner.value ? `https://testnets.opensea.io/assets/mumbai/${ process.env.VUE_APP_HEXHEADS_ADDRESS }/${ BigInt(owner.value).toString() }` : '');
+
+const addressLink = computed(() => owner.value ? `https://mumbai.polygonscan.com/address//${owner.value }` : '');
 </script >
