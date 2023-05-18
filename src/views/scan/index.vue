@@ -144,15 +144,17 @@ const searchDebounced = debounce(search, 500);
 const resultAddress = computed(() => utils.isAddress(address.value) ? address.value : '');
 
 async function search() {
+    const value = field.value.trim();
+
     isSearching.value = true;
 
     try {
         let resultAddress = '';
 
-        if (utils.isAddress(field.value)) {
-            resultAddress = field.value;
+        if (utils.isAddress(value)) {
+            resultAddress = value;
         } else {
-            const addressName = await API.provider.resolveName(field.value);
+            const addressName = await API.provider.resolveName(value);
 
             if (addressName) {
                 resultAddress = addressName;
