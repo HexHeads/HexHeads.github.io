@@ -62,10 +62,10 @@
         </div>
         <div class="mb-10">
             <div class="text-xl mb-2 break-words">
-                Address: {{ account.address || '???' }}
+                Address: <br> {{ account.address || '???' }}
             </div>
             <div class="text-xl break-words">
-                Private Key: {{ account.privateKey || '???' }}
+                Private Key: <br> {{ account.privateKey || '???' }}
             </div>
         </div>
         <div class="mb-[45px]">

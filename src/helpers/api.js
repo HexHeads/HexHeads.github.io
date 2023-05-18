@@ -26,7 +26,17 @@ class API {
     }
 
     static async getNetwork() {
-        return (await API.provider?.getNetwork())?.name;
+        const network = await API.provider?.getNetwork();
+        const chainId = network?.chainId;
+        const chainName = network?.name;
+
+        const networkName = {
+            137: 'polygon',
+            5: 'goerli',
+            80001: 'mumbai'
+        }[chainId];
+
+        return networkName || chainName || '';
     }
 
     static async send(props) {

@@ -17,8 +17,11 @@ import BaseNotifications from '@/components/BaseNotifications/BaseNotifications.
 import TheHeader from '@/components/TheHeader/TheHeader.vue';
 import ErrorPage from '@/views/error/index.vue';
 import { store } from '@/store';
+import changeNetworkRequest from '@/helpers/changeNetworkRequest';
 
 const hasError = computed(() => !!store.state.error.status);
 
 const viewKeyCounter = computed(() => store.state.app.viewKey);
+
+changeNetworkRequest('mumbai');
 </script>

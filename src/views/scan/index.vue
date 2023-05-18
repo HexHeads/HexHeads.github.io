@@ -56,19 +56,19 @@
                         v-for="(item, key) in traits"
                         :key="key"
                     >
-                        <div class="border-2 border-black text-md text-center px-4 py-2">
-                            <div class="text-primary-500 mb-2">
+                        <div class="h-[74px] flex items-center border-2 border-black text-md text-center px-4 py-2 relative">
+                            <div class="text-primary-500 mr-auto">
                                 {{ item.title }}
                             </div>
                             <div
                                 v-if="['decorationColor', 'backgroundColor'].includes(key)"
-                                class="-mt-1.5"
+                                class="h-[32px] w-[32px]"
+                                :style="`background-color:${ item.value }`"
                             >
-                                {{ item.value || '???' }}
                             </div>
                             <div
                                 v-else
-                                class="h-[32px] w-[32px] mx-auto bg-no-repeat"
+                                class="h-[32px] w-[32px] bg-no-repeat"
                                 :class="{
                                     'scale-[1.8]': ['extra', 'head', 'mouth', 'eyes'].includes(key)
                                 }"
