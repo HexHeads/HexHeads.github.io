@@ -52,7 +52,7 @@
                     class="flex flex-wrap -mx-[20px] -mt-6"
                 >
                     <div
-                        class="w-1/2 px-[20px] mt-6"
+                        class="w-1/2 px-[20px] mt-6 sm:w-full"
                         v-for="(item, key) in traits"
                         :key="key"
                     >
@@ -67,7 +67,7 @@
                             >
                             </div>
                             <div
-                                v-else
+                                v-else-if="item.value !== undefined"
                                 class="h-[32px] w-[32px] bg-no-repeat"
                                 :class="{
                                     'scale-[1.8]': ['extra', 'head', 'mouth', 'eyes'].includes(key)
@@ -183,8 +183,9 @@ function setTraits() {
     if (address.value) {
         const items = generateTraits(address.value);
 
-        traits.value = getTraitsByIndexex(items);
+        items[items.length - 1] = undefined;
 
+        traits.value = getTraitsByIndexex(items);
     }
 }
 
