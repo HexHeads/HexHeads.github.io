@@ -13,7 +13,7 @@
                 >
                     <CollectionCard
                         class="w-full cursor-pointer"
-                        :address="item"
+                        :address="item.address"
                         :is-gallery="true"
                         @click="to(item)"
                     />
