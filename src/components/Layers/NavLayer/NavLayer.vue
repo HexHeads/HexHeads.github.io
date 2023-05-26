@@ -26,7 +26,7 @@
                 <div :class="classes.navItem">
                     <ActionLink
                         v-if="!item.active"
-                        :class="classes.navLink"
+                        :class="[classes.navLink, item.to === '#' && 'pointer-events-none opacity-30']"
                         :theme="!item.theme ? 'black' : ''"
                         :to="item.to"
                         :underline="false"
@@ -110,14 +110,14 @@ const navItems = computed(() => [
     },
     {
         title: 'Dashboard',
-        to: { name: 'dashboard' },
+        to: '#',
         active: route.name === 'dashboard'
     },
     {
         title: 'DAO',
         to: '#',
         theme: 'text-[#666666]',
-        active: route.name === ''
+        active: route.name === 'dao'
     },
     {
         title: 'Social',

@@ -99,7 +99,7 @@
 <!--                                :error="formErrors.hexHeadName"-->
 <!--                            />-->
 <!--                        </div>-->
-                        <div class="w-full">
+                        <div class="w-full mt-6">
                             <BaseButton
                                 class="w-full"
                                 size="xl"
@@ -214,8 +214,9 @@ async function checkAndSetMint() {
         return;
     }
 
-    const [mintedAddress] = await HexHeadsService.ownerOf(address.value);
+    const [mintedAddress, error] = await HexHeadsService.ownerOf(address.value);
     //BigInt(address.value).toString()
+
 
     isMinted.value = !!mintedAddress;
 }
