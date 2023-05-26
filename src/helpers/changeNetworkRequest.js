@@ -4,13 +4,14 @@ import API from '@/helpers/api';
 
 const networksChains = {
     mumbai: '0x13881',
-    goerli: '0x5'
+    goerli: '0x5',
+    ethereum: '0x1'
 };
 
 async function changeNetworkRequest(network) {
     const currentNetwork = await API.getNetwork();
 
-    if (currentNetwork === 'mumbai') {
+    if (currentNetwork === 'ethereum') {
         return;
     }
 

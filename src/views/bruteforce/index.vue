@@ -3,7 +3,6 @@
         <div class="flex -mt-12 -mx-12 mb-[50px] md:flex-col md:text-center md:items-center">
             <div class="px-12 mt-12">
                 <div class="shadow-[0_0_15px_rgba(0,_0,_0,_0.25)]">
-                    <!--      :placeholder="!wasFound"              -->
                     <HexHead
                         :is-canvas="true"
                         :placeholder="!formDataTraitsValues.filter(Boolean).length && !isBruteforcing"
@@ -14,18 +13,20 @@
             <div class="flex flex-col px-12 mt-12">
                 <div class="flex flex-wrap -mx-[20px] -mt-6">
                     <div
-                        class="w-1/2 px-[20px] mt-6"
+                        class="w-1/2 px-[20px] mt-6 flex"
                         v-for="(item, key) in formTraits"
                         :key="key"
                     >
                         <div
-                            class="h-[74px] px-4 bg-white border border-black cursor-pointer flex items-center"
+                            class="h-[74px] w-full px-4 bg-white border border-black cursor-pointer flex items-center sm:flex-wrap sm:h-auto sm:min-h-[74px]"
                             @click="openChoice(item, key,  ['backgroundColor', 'decorationColor'].includes(key) && 'color')"
                         >
-                            {{ item.title }}
+                            <div class="sm:w-full">
+                                {{ item.title }}
+                            </div>
                             <div
                                 v-if="!['decorationColor', 'backgroundColor'].includes(key) && formData.traits[key] !== ''"
-                                class="h-[32px] w-[32px] ml-4 bg-no-repeat"
+                                class="h-[32px] w-[32px] ml-4 bg-no-repeat sm:ml-0 sm:my-2"
                                 :class="{
                                     'scale-[1.8]': ['extra', 'head', 'mouth', 'eyes'].includes(key)
                                 }"
@@ -34,7 +35,7 @@
                             </div>
                             <BaseClose
                                 v-if="formData.traits[key] !== ''"
-                                class="ml-auto"
+                                class="ml-auto sm:my-2"
                                 @click.stop="formData.traits[key] = ''"
                             />
                         </div>

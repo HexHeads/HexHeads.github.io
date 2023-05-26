@@ -17,7 +17,7 @@ class API {
 
     static get contracts() {
         return {
-            hexHeads: new ethers.Contract(process.env.VUE_APP_HEXHEADS_ADDRESS, hexHeadsABI, API.provider),
+            hexHeads: new ethers.Contract(process.env.VUE_APP_HEXHEADS_ADDRESS_ETHEREUM, hexHeadsABI, API.provider),
         };
     }
 
@@ -33,7 +33,8 @@ class API {
         const networkName = {
             137: 'polygon',
             5: 'goerli',
-            80001: 'mumbai'
+            80001: 'mumbai',
+            1: 'ethereum'
         }[chainId];
 
         return networkName || chainName || '';

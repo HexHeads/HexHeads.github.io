@@ -1,6 +1,5 @@
 import cutAddress from '@/helpers/cutAddress';
 import API from '@/helpers/api';
-import ca from '@vuepic/vue-datepicker';
 
 function state() {
     return {
