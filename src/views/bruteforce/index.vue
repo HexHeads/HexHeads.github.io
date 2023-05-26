@@ -86,36 +86,36 @@
                 </div>
             </div>
         </div>
-        <div>
-            <div class="text-xxl mb-8">
-                Safety
-            </div>
-            <div class="pl-5 space-y-1 text-md sm:pl-2">
-                <ListItem>
-                    This page is also available at GitHub Pages domain: <ActionLink class="break-words" theme="secondary">HexHeads.github.io/bruteforce.html</ActionLink>
-                </ListItem>
-                <ListItem>
-                    The source code of this page might be reviewed in <ActionLink theme="secondary">GitHub repository</ActionLink> serving this page via GitHub Pages.
-                </ListItem>
-                <ListItem>
-                    <span class="text-primary-500">This page works offline</span>, so you can turn off the internet connection while the process.
-                </ListItem>
-                <ListItem>
-                    This page uses Web3.js for wallet generation.
-                    <br>
-                    The version of the library is the same with <ActionLink theme="secondary">the one published in web3.js Github</ActionLink> and may be verified.
-                </ListItem>
-                <ListItem>
-                    The randomness seed is up to Web3 library.
-                </ListItem>
-                <ListItem>
-                    Everything is provided "as it is" and you're the only who's responsible for your Private Keys.
-                </ListItem>
-                <ListItem >
-                    <span class="text-primary-500">DYOR</span>
-                </ListItem>
-            </div>
-        </div>
+<!--        <div>-->
+<!--            <div class="text-xxl mb-8">-->
+<!--                Safety-->
+<!--            </div>-->
+<!--            <div class="pl-5 space-y-1 text-md sm:pl-2">-->
+<!--                <ListItem>-->
+<!--                    This page is also available at GitHub Pages domain: <ActionLink class="break-words" theme="secondary">HexHeads.github.io/bruteforce.html</ActionLink>-->
+<!--                </ListItem>-->
+<!--                <ListItem>-->
+<!--                    The source code of this page might be reviewed in <ActionLink theme="secondary">GitHub repository</ActionLink> serving this page via GitHub Pages.-->
+<!--                </ListItem>-->
+<!--                <ListItem>-->
+<!--                    <span class="text-primary-500">This page works offline</span>, so you can turn off the internet connection while the process.-->
+<!--                </ListItem>-->
+<!--                <ListItem>-->
+<!--                    This page uses Web3.js for wallet generation.-->
+<!--                    <br>-->
+<!--                    The version of the library is the same with <ActionLink theme="secondary">the one published in web3.js Github</ActionLink> and may be verified.-->
+<!--                </ListItem>-->
+<!--                <ListItem>-->
+<!--                    The randomness seed is up to Web3 library.-->
+<!--                </ListItem>-->
+<!--                <ListItem>-->
+<!--                    Everything is provided "as it is" and you're the only who's responsible for your Private Keys.-->
+<!--                </ListItem>-->
+<!--                <ListItem >-->
+<!--                    <span class="text-primary-500">DYOR</span>-->
+<!--                </ListItem>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 </template>
 
