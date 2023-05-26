@@ -44,23 +44,21 @@ function generateTraits(idHex) {
         traits[8] = undefined
     }
 
-    console.log(traits)
-
     return traits;
 }
 
-function generate(idHex) {
+function generate(idHex, id) {
     if (idHex === undefined) {
         idHex = generateAddress();
     }
     const traits = generateTraits(idHex);
-    drawFromTraits(traits);
+    drawFromTraits(traits, id);
 }
 
 //// DRAWING ////
 
-function drawFromTraits(traits) {
-    const ctx = document.getElementById('canvas').getContext('2d');
+function drawFromTraits(traits, id = '') {
+    const ctx = document.getElementById('canvas' + (id ? '-' + id: '').trim()).getContext('2d');
     drawBackground(ctx, traits[0]);
     drawDecoration(ctx, traits);
 }
