@@ -15,7 +15,7 @@
                         class="w-full cursor-pointer"
                         :address="item"
                         :is-gallery="true"
-                        @click="$router.push({ name: 'scan', query: { address: item } })"
+                        @click="to(item)"
                     />
                 </div>
             </div>
@@ -25,14 +25,18 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import Web3 from 'web3';
 import CollectionCard from '@/components/CollectionCard/CollectionCard';
 import wait from '@/helpers/wait';
+import { store } from '@/store';
 
 
 // META
 
 const web3 = new Web3;
+
+const router = new useRouter();
 
 // COLLECTION
 
@@ -40,7 +44,7 @@ const items = ref([]);
 const loading = ref(false);
 
 async function getItem() {
-    const { address } = web3.eth.accounts.create();
+    const { address, privateKey } = web3.eth.accounts.create();
 
     if (items.value.includes(address)) {
         getItem();
@@ -50,7 +54,7 @@ async function getItem() {
 
     await wait(() => true, 100);
 
-    return address
+    return { address, privateKey };
 }
 
 async function addItems() {
@@ -60,4 +64,9 @@ async function addItems() {
 }
 
 addItems();
+
+async function to(item) {
+    store.dispatch('collection/setPrivateKey', item.privateKey);
+    router.push({ name: 'scan', query: { address: item.address } });
+}
 </script>

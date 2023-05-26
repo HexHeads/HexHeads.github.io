@@ -17,8 +17,9 @@
                     class="mb-3"
                     placeholder="Address / ENS / ID"
                 />
-                <template
+                <div
                     v-if="resultAddress"
+                    class="mb-3"
                 >
                     <div class="mb-3">
                         <template v-if="owner">
@@ -30,7 +31,7 @@
 <!--                        Claimed on 12 Jan 2023 by <ActionLink theme="secondary" href="#">0x1CcA...C912</ActionLink>-->
                     </div>
                     <div class="flex justify-between">
-                        <div class="mb-6">
+                        <div class="mb-3">
                             Role: <span class="text-primary-500">Observer</span>
                         </div>
                         <div>
@@ -45,7 +46,15 @@
 <!--                            |  <ActionLink theme="secondary">LooksRare</ActionLink> |  <ActionLink theme="secondary">Frenly</ActionLink>-->
                         </div>
                     </div>
-                </template>
+                    <div
+                        v-if="privateKey"
+                        class="mb-3 break-words"
+                    >
+                        Private key (will be destroyed after page reload):
+                        <br>
+                        {{ privateKey }}
+                    </div>
+                </div>
 
                 <div
                     v-if="resultAddress"
@@ -85,10 +94,10 @@
                 HexHeads are faces of Ethereum community!
             </div>
             <div class="text-md">
-                There are more than <span class="text-primary-500">1.5 quadrillion</span> unique HexHeads and exactly
-                <br>
-                1'461'501'637'330'902'918'203'684'832'716'283'019'655'932'542'975 in total and every Ethereum address owns one!
-                <br><br>
+<!--                There are more than <span class="text-primary-500">1.5 quadrillion</span> unique HexHeads and exactly-->
+<!--                <br>-->
+<!--                1'461'501'637'330'902'918'203'684'832'716'283'019'655'932'542'975 in total and every Ethereum address owns one!-->
+<!--                <br><br>-->
                 HexHeads are supported by several Web3 projects to render users' avatars in their apps, but there's more...
                 <br><br>
                 Since these NFTs are owned by everyone, HexHeads is <span class="text-primary-500">the largest Web3 community</span> and a DAO.
@@ -97,7 +106,7 @@
                 <br><br>
                 Fell free to claim your NFT for free, join our <ActionLink
                 theme="secondary"
-                href="https://discord.gg/HCHQTg7m"
+                href="https://discord.gg/xMRhYCMbQ7"
                 target="_blank"
             >
                 Discord
@@ -124,6 +133,8 @@ import { generateTraits } from '@/helpers/renderer';
 import cutAddress from '@/helpers/cutAddress';
 import HexHeadsService from '@/services/HexHeadsService';
 
+import { store } from '@/store';
+
 // META
 
 const route = useRoute();
@@ -134,6 +145,14 @@ const field = ref(address.value);
 
 const traits = ref({});
 
+
+// PRIVATE KEY
+
+const privateKey = store.state.collection.privateKey;
+
+if (privateKey) {
+    store.dispatch('collection/removePrivateKey');
+}
 
 // SEARCH
 
@@ -212,7 +231,7 @@ checkAndSetMint();
 // OPENSEA LINK
 
 // eslint-disable-next-line no-undef
-const opensea = computed(() => owner.value ? `https://testnets.opensea.io/assets/mumbai/${ process.env.VUE_APP_HEXHEADS_ADDRESS }/${ BigInt(owner.value).toString() }` : '');
+const opensea = computed(() => owner.value ? `https://opensea.io/assets/ethereum/${ process.env.VUE_APP_HEXHEADS_ADDRESS_ETHEREUM }/${ BigInt(owner.value).toString() }` : '');
 
-const addressLink = computed(() => owner.value ? `https://mumbai.polygonscan.com/address//${owner.value }` : '');
+const addressLink = computed(() => owner.value ? `https://etherscan.io/address/${owner.value }` : '');
 </script >

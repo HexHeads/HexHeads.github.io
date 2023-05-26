@@ -23,5 +23,5 @@ const hasError = computed(() => !!store.state.error.status);
 
 const viewKeyCounter = computed(() => store.state.app.viewKey);
 
-changeNetworkRequest('mumbai');
+changeNetworkRequest('ethereum');
 </script>

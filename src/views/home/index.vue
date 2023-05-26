@@ -40,7 +40,7 @@
 <!--                            <div class="mx-3">|</div>-->
                             <ActionLink
                                 theme="secondary"
-                                href="https://discord.gg/HCHQTg7m"
+                                href="https://discord.gg/xMRhYCMbQ7"
                                 target="_blank"
                             >
                                 Discord
@@ -76,7 +76,7 @@
                         <br>
                         Join our <ActionLink
                             theme="secondary"
-                            href="https://discord.gg/HCHQTg7m"
+                            href="https://discord.gg/xMRhYCMbQ7"
                             target="_blank"
                         >
                         Discord
@@ -118,10 +118,10 @@
                 HexHeads are faces of Ethereum community!
             </div>
             <div class="text-md">
-                There are more than <span class="text-primary-500">1.5 quadrillion</span> unique HexHeads and exactly
-                <br>
-                1'461'501'637'330'902'918'203'684'832'716'283'019'655'932'542'975 in total and every Ethereum address owns one!
-                <br><br>
+<!--                There are more than <span class="text-primary-500">1.5 quadrillion</span> unique HexHeads and exactly-->
+<!--                <br>-->
+<!--                1'461'501'637'330'902'918'203'684'832'716'283'019'655'932'542'975 in total and every Ethereum address owns one!-->
+<!--                <br><br>-->
                 HexHeads are supported by several Web3 projects to render users' avatars in their apps, but there's more...
                 <br><br>
                 Since these NFTs are owned by everyone, HexHeads is <span class="text-primary-500">the largest Web3 community</span> and a DAO.
@@ -130,7 +130,7 @@
                 <br><br>
                 Fell free to claim your NFT for free, join our <ActionLink
                 theme="secondary"
-                href="https://discord.gg/HCHQTg7m"
+                href="https://discord.gg/xMRhYCMbQ7"
                 target="_blank"
             >
                 Discord
