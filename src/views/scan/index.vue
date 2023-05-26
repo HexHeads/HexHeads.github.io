@@ -48,7 +48,7 @@
                     </div>
                     <div
                         v-if="privateKey"
-                        class="mb-3"
+                        class="mb-3 break-words"
                     >
                         Private key (will be destroyed after page reload):
                         <br>
