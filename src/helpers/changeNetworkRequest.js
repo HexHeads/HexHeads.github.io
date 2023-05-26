@@ -26,7 +26,7 @@ async function changeNetworkRequest(network) {
 
     if (isChangeNetwork) {
         try {
-            await window.ethereum.request({
+            await window.ethereum?.request({
                 method: 'wallet_switchEthereumChain',
                 params: [{ chainId: networksChains[network] }]
             });
