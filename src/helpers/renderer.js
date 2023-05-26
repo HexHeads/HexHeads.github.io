@@ -13,6 +13,14 @@ function generateAddress() {
     return address
 }
 
+function isFoil(idHex) {
+    const id = BigInt(idHex);
+    if (id % BigInt("1500000000") === 0n) {
+        return true;
+    }
+    return false
+}
+
 function generateTraits(idHex) {
     const traits = [];
     idHex = idHex.slice(2);
@@ -21,15 +29,22 @@ function generateTraits(idHex) {
         traits.push((Number("0x" + idHex.slice(i*4, i*4+4)) + seed) % metadata[i].length);
     }
 
-    // 20% without hat
-    if (seed % 5 === 0) {
-        traits[7] = -1
+    // 11% without hair
+    if (seed % 9 === 0) {
+        traits[6] = undefined
     }
 
-    // 75% without extra
-    if (seed % 4 !== 0) {
-        traits[8] = -1
+    // 20% without hat
+    if (seed % 5 === 0) {
+        traits[7] = undefined
     }
+
+    // 90% without extra
+    if (seed % 10 !== 0) {
+        traits[8] = undefined
+    }
+
+    console.log(traits)
 
     return traits;
 }
