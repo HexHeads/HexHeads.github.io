@@ -15,6 +15,7 @@
                         class="w-full cursor-pointer"
                         :address="item.address"
                         :is-gallery="true"
+                        :id="createId('collection-card')"
                         @click="to(item)"
                     />
                 </div>
@@ -29,6 +30,7 @@ import { useRouter } from 'vue-router';
 import Web3 from 'web3';
 import CollectionCard from '@/components/CollectionCard/CollectionCard';
 import wait from '@/helpers/wait';
+import { createId } from '@/helpers/uuid';
 import { store } from '@/store';
 
 

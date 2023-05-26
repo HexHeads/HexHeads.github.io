@@ -4,7 +4,6 @@
             <div class="px-12 mt-12">
                 <div class="shadow-[0_0_15px_rgba(0,_0,_0,_0.25)]">
                     <HexHead
-                        :is-canvas="true"
                         :placeholder="!formDataTraitsValues.filter(Boolean).length && !isBruteforcing"
                         size="xl"
                     />

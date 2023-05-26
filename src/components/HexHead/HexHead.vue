@@ -6,26 +6,19 @@
             v-if="placeholder"
             :class="classes.image"
         />
-        <iframe
-            v-else-if="!isCanvas"
-            :class="classes.image"
-            :src="`/image?address=${ address }`"
-            frameborder="0"/>
         <canvas
-            v-if="isCanvas"
             v-show="!placeholder"
-            id="canvas"
+            :id="`canvas${ id ? '-' + id : '' }`"
             :class="classes.image"
             width="32"
             height="32"
         />
     </div>
 </template>
-
-
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import makeClasses from '@/helpers/makeClasses';
+import { generate } from '@/helpers/renderer';
 
 
 // META
@@ -40,6 +33,7 @@ const props = defineProps({
     size: String,
     isCanvas: Boolean,
     placeholder: Boolean,
+    id: String,
     themeSettings: Object
 });
 
@@ -64,5 +58,9 @@ const classes = computed<ReturnType<typeof useClasses>>(() => {
     return useClasses({
         size: props.size
     });
+});
+
+onMounted(() => {
+    generate(props.address, props.id);
 });
 </script>

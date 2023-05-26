@@ -8,6 +8,7 @@
                 <HexHead
                     :class="classes.hex"
                     :address="address"
+                    :id="id"
                 />
             </div>
         </div>
@@ -47,6 +48,9 @@ const props = defineProps({
         type: String
     },
     title: {
+        type: String
+    },
+    id: {
         type: String
     },
     isGallery: {
