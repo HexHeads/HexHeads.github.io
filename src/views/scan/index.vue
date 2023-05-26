@@ -173,7 +173,7 @@ async function search() {
         if (utils.isAddress(value)) {
             resultAddress = value;
         } else {
-            const addressName = await API.provider.resolveName(value);
+            const addressName = await API.provider?.resolveName(value);
 
             if (addressName) {
                 resultAddress = addressName;

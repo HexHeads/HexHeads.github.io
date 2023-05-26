@@ -38,7 +38,7 @@ const actions = {
         let addressName = '';
 
         try {
-            addressName = await API.provider.lookupAddress(state.address)
+            addressName = await API.provider?.lookupAddress(state.address)
         } catch (e) {
             console.log(e);
         }
