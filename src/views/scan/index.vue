@@ -67,7 +67,7 @@
                     >
                         <div class="h-[74px] flex items-center border-2 border-black text-md text-center px-4 py-2 relative">
                             <div class="text-primary-500 mr-auto">
-                                {{ item.title }}
+                                {{ item.title }} {{ item.value }}
                             </div>
                             <div
                                 v-if="['decorationColor', 'backgroundColor'].includes(key)"
@@ -201,6 +201,8 @@ watch(field, searchDebounced);
 function setTraits() {
     if (address.value) {
         const items = generateTraits(address.value);
+
+        console.log(items);
 
         items[items.length - 1] = undefined;
 
