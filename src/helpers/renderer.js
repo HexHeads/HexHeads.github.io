@@ -34,8 +34,8 @@ function generateTraits(idHex) {
         traits[6] = undefined
     }
 
-    // 20% without hat
-    if (seed % 5 === 0) {
+    // 30% without hat
+    if (seed % 3 === 0) {
         traits[7] = undefined
     }
 
