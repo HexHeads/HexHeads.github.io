@@ -149,7 +149,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onUnmounted } from 'vue';
 import Web3 from 'web3';
 import HexHead from '@/components/HexHead/HexHead';
 import SelectField from '@/components/Form/SelectField/SelectField';
@@ -198,6 +198,8 @@ const isBruteforcing = ref(false);
 
 const isFind = ref(false);
 
+let bruteforceInt = null;
+
 function bruteforce() {
     stop.value = false;
     isFind.value = false;
@@ -226,13 +228,13 @@ function startBruteforce() {
     drawFromTraits(actualTraits);
 
     if (isFoilCheck.value && !isFoil(address)) {
-        setTimeout(startBruteforce, 10);
+        bruteforceInt = setTimeout(startBruteforce, 10);
         return;
     }
 
     for(let i = 0; i <= formDataTraitsValues.value.length; i++) {
         if (formDataTraitsValues.value[i] !== undefined && formDataTraitsValues.value[i] !== actualTraits[i]) {
-            setTimeout(startBruteforce, 10)
+            bruteforceInt = setTimeout(startBruteforce, 10)
             return;
         }
     }
@@ -240,6 +242,10 @@ function startBruteforce() {
     isFind.value = true;
     wasFound.value = true;
 }
+
+onUnmounted(() => {
+    clearTimeout(bruteforceInt);
+});
 
 
 // OPEN CHOICE

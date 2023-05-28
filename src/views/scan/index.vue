@@ -86,6 +86,16 @@
                             </div>
                         </div>
                     </div>
+                    <div
+                        v-if="isFoilCheck"
+                        class="w-1/2 px-[20px] mt-6 sm:w-full"
+                    >
+                        <div class="h-[74px] flex items-center border-2 border-primary-500 text-md text-center px-4 py-2 relative">
+                            <div class="text-primary-500 mr-auto">
+                                Foil
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -129,7 +139,7 @@ import TextField from '@/components/Form/TextField/TextField';
 import API from '@/helpers/api';
 
 import { getTraitsByIndexex } from '@/helpers/getTraits';
-import { generateTraits } from '@/helpers/renderer';
+import { generateTraits, isFoil } from '@/helpers/renderer';
 import cutAddress from '@/helpers/cutAddress';
 import HexHeadsService from '@/services/HexHeadsService';
 
@@ -161,6 +171,8 @@ const isSearching = ref(false);
 const searchDebounced = debounce(search, 500);
 
 const resultAddress = computed(() => utils.isAddress(address.value) ? address.value : '');
+
+let isFoilCheck = ref(false);
 
 async function search() {
     const value = field.value.trim();
@@ -221,6 +233,7 @@ async function checkAndSetMint() {
     const [mintedAddress] = await HexHeadsService.ownerOf(address.value);
 
     owner.value = mintedAddress;
+    isFoilCheck.value = isFoil(address.value);
 }
 
 checkAndSetMint();
