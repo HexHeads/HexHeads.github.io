@@ -202,10 +202,6 @@ function setTraits() {
     if (address.value) {
         const items = generateTraits(address.value);
 
-        console.log(items);
-
-        items[items.length - 1] = undefined;
-
         traits.value = getTraitsByIndexex(items);
     }
 }
