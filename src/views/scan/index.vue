@@ -184,6 +184,10 @@ async function search() {
 
         if (utils.isAddress(value)) {
             resultAddress = value;
+            // eslint-disable-next-line no-undef
+        } else if (utils.isAddress(('0x' + BigInt(value).toString(16)))) {
+            // eslint-disable-next-line no-undef
+            resultAddress = ('0x' + BigInt(value).toString(16));
         } else {
             const addressName = await API.provider?.resolveName(value);
 
