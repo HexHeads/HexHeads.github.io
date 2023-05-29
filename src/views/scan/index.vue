@@ -67,7 +67,7 @@
                     >
                         <div class="h-[74px] flex items-center border-2 border-black text-md text-center px-4 py-2 relative">
                             <div class="text-primary-500 mr-auto">
-                                {{ item.title }} {{ item.value }}
+                                {{ item.title }}
                             </div>
                             <div
                                 v-if="['decorationColor', 'backgroundColor'].includes(key)"
