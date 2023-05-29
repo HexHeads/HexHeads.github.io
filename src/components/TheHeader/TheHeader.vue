@@ -20,13 +20,22 @@
                     <div v-if="index" :class="classes.navDelimiter">|</div>
                     <div :class="classes.navItem">
                         <ActionLink
-                            v-if="!item.active"
+                            v-if="!item.active && !item.href"
                             :class="[classes.navLink, item.to === '#' && 'pointer-events-none opacity-30']"
                             :theme="!item.theme ? 'black' : ''"
                             :to="item.to"
                             :theme-settings="{
                                 color: item.theme || ''
                             }"
+                        >
+                            {{ item.title }}
+                        </ActionLink>
+                        <ActionLink
+                            v-else-if="item.href"
+                            :class="[classes.navLink]"
+                            :href="item.href"
+                            theme="secondary"
+                            target="_blank"
                         >
                             {{ item.title }}
                         </ActionLink>
@@ -130,14 +139,13 @@ const navItems = computed(() => [
         active: route.name === ''
     },
     {
-        title: 'Social',
-        to: '#',
-        active: route.name === 'social'
-    },
-    {
         title: 'Collection',
         to: { name: 'collection' },
         active: route.name === 'collection'
+    },
+    {
+        title: 'Twitter',
+        href: 'https://twitter.com/WeAreHexHeads'
     },
 ]);
 
