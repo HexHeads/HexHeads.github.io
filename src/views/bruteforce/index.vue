@@ -17,10 +17,19 @@
                         :key="key"
                     >
                         <div
-                            class="h-[74px] w-full px-4 bg-white border border-black cursor-pointer flex items-center sm:flex-wrap sm:h-auto sm:min-h-[74px]"
+                            class="h-[74px] w-full px-4 bg-white border transition-fast cursor-pointer flex items-center sm:flex-wrap sm:h-auto sm:min-h-[74px]"
+                            :class="{
+                                'border-primary-500': formData.traits[key] !== '',
+                                'border-black': formData.traits[key] === ''
+                            }"
                             @click="openChoice(item, key,  ['backgroundColor', 'decorationColor'].includes(key) && 'color')"
                         >
-                            <div class="sm:w-full">
+                            <div
+                                class="sm:w-full"
+                                :class="{
+                                    'text-primary-500': formData.traits[key] !== ''
+                                }"
+                            >
                                 {{ item.title }}
                             </div>
                             <div
@@ -37,6 +46,27 @@
                                 class="ml-auto sm:my-2"
                                 @click.stop="formData.traits[key] = ''"
                             />
+                        </div>
+                    </div>
+                    <div
+                        class="w-1/2 px-[20px] mt-6 flex"
+                    >
+                        <div
+                            class="h-[74px] w-full px-4 bg-white border  cursor-pointer flex items-center sm:flex-wrap sm:h-auto sm:min-h-[74px]"
+                            :class="{
+                                'border-primary-500': isFoilCheck,
+                                'border-black': !isFoilCheck
+                            }"
+                            @click="isFoilCheck = !isFoilCheck"
+                        >
+                            <div
+                                class="sm:w-full"
+                                :class="{
+                                    'text-primary-500': isFoilCheck
+                                }"
+                            >
+                               Foil
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -119,7 +149,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onUnmounted } from 'vue';
 import Web3 from 'web3';
 import HexHead from '@/components/HexHead/HexHead';
 import SelectField from '@/components/Form/SelectField/SelectField';
@@ -129,7 +159,7 @@ import BaseClose from '@/components/BaseClose/BaseClose';
 import ListItem from '@/components/ListItem/ListItem';
 import { open } from '@/composables/useLayer';
 import { getTraits, getTraitsForForm } from '@/helpers/getTraits';
-import { drawFromTraits, generateTraits } from '@/helpers/renderer';
+import { drawFromTraits, generateTraits, isFoil } from '@/helpers/renderer';
 
 // META
 
@@ -145,6 +175,7 @@ const account = ref({
 // META: TRAITS
 
 const traits = getTraits();
+const isFoilCheck = ref(false);
 const formTraits = getTraitsForForm();
 
 const formData = ref({
@@ -166,6 +197,8 @@ watch(formData.value.traits, () => {
 const isBruteforcing = ref(false);
 
 const isFind = ref(false);
+
+let bruteforceInt = null;
 
 function bruteforce() {
     stop.value = false;
@@ -194,9 +227,14 @@ function startBruteforce() {
 
     drawFromTraits(actualTraits);
 
+    if (isFoilCheck.value && !isFoil(address)) {
+        bruteforceInt = setTimeout(startBruteforce, 10);
+        return;
+    }
+
     for(let i = 0; i <= formDataTraitsValues.value.length; i++) {
         if (formDataTraitsValues.value[i] !== undefined && formDataTraitsValues.value[i] !== actualTraits[i]) {
-            setTimeout(startBruteforce, 10)
+            bruteforceInt = setTimeout(startBruteforce, 10)
             return;
         }
     }
@@ -204,6 +242,10 @@ function startBruteforce() {
     isFind.value = true;
     wasFound.value = true;
 }
+
+onUnmounted(() => {
+    clearTimeout(bruteforceInt);
+});
 
 
 // OPEN CHOICE
