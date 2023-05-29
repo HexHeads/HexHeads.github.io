@@ -11,7 +11,7 @@ export default [
     ],
     [
         "#E3AABE", "#ADC886", "#C9B0D4", "#E3AAD0",
-        "#9EDB83", "#92B8D8", "#86C8C4", "#B8C29о2",
+        "#9EDB83", "#92B8D8", "#86C8C4", "#B8C292",
         "#5FCCB7", "#ACB8AC", "#92C6D8", "#BCAEA4",
         "#90CBBD", "#C6BAE3", "#90CBA2", "#92D8C8",
         "#A0E3D6", "#EAB9B2", "#C4C3C4", "#8DE0D0",
