@@ -131,5 +131,6 @@ function drawTrait(ctx, layer, traits) {
 export {
     generateTraits,
     generate,
-    drawFromTraits
+    drawFromTraits,
+    isFoil
 }

@@ -16,7 +16,7 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, watch } from 'vue';
 import makeClasses from '@/helpers/makeClasses';
 import { generate } from '@/helpers/renderer';
 
@@ -63,4 +63,8 @@ const classes = computed<ReturnType<typeof useClasses>>(() => {
 onMounted(() => {
     generate(props.address, props.id);
 });
+
+watch(() => props.address, () => {
+    generate(props.address, props.id);
+})
 </script>

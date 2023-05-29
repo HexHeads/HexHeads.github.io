@@ -67,7 +67,7 @@
                     >
                         <div class="h-[74px] flex items-center border-2 border-black text-md text-center px-4 py-2 relative">
                             <div class="text-primary-500 mr-auto">
-                                {{ item.title }}
+                                {{ item.title }} {{ item.value }}
                             </div>
                             <div
                                 v-if="['decorationColor', 'backgroundColor'].includes(key)"
@@ -83,6 +83,16 @@
                                 }"
                                 :style="`background-image:url(${ require(`@/assets/images/hexheads/${ item.sprite }.png`) });background-position:${ -(item.value - (Math.floor((item.value / 16))) * 16) * 32 }px ${ Math.floor((item.value / 16)) * -32 }px;`"
                             >
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        v-if="isFoilCheck"
+                        class="w-1/2 px-[20px] mt-6 sm:w-full"
+                    >
+                        <div class="h-[74px] flex items-center border-2 border-primary-500 text-md text-center px-4 py-2 relative">
+                            <div class="text-primary-500 mr-auto">
+                                Foil
                             </div>
                         </div>
                     </div>
@@ -129,7 +139,7 @@ import TextField from '@/components/Form/TextField/TextField';
 import API from '@/helpers/api';
 
 import { getTraitsByIndexex } from '@/helpers/getTraits';
-import { generateTraits } from '@/helpers/renderer';
+import { generateTraits, isFoil } from '@/helpers/renderer';
 import cutAddress from '@/helpers/cutAddress';
 import HexHeadsService from '@/services/HexHeadsService';
 
@@ -161,6 +171,8 @@ const isSearching = ref(false);
 const searchDebounced = debounce(search, 500);
 
 const resultAddress = computed(() => utils.isAddress(address.value) ? address.value : '');
+
+let isFoilCheck = ref(false);
 
 async function search() {
     const value = field.value.trim();
@@ -202,8 +214,6 @@ function setTraits() {
     if (address.value) {
         const items = generateTraits(address.value);
 
-        items[items.length - 1] = undefined;
-
         traits.value = getTraitsByIndexex(items);
     }
 }
@@ -223,6 +233,7 @@ async function checkAndSetMint() {
     const [mintedAddress] = await HexHeadsService.ownerOf(address.value);
 
     owner.value = mintedAddress;
+    isFoilCheck.value = isFoil(address.value);
 }
 
 checkAndSetMint();

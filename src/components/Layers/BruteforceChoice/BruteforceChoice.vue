@@ -14,7 +14,7 @@
             class="flex flex-wrap -mt-4 -mx-2"
         >
             <div
-                v-for="(item, index) in items.slice(0, -1)"
+                v-for="(item, index) in items"
                 :key="index"
                 class="flex w-1/5 mt-4 px-2 md:w-1/4 sm:w-1/2"
             >
