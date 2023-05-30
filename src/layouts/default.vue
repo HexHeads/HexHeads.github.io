@@ -4,6 +4,9 @@
         <TheHeader class="mb-[50px]" />
         <div class="container mb-[50px]">
             <RouterView :key="$route.path + viewKeyCounter" />
+            <div class="text-base mt-24">
+                Art by <span class="text-primary-500">PiiiXL</span>
+            </div>
         </div>
     </template>
     <Layers />
