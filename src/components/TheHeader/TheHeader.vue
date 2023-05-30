@@ -128,11 +128,6 @@ const navItems = computed(() => [
         active: route.name === 'scan'
     },
     {
-        title: 'Dashboard',
-        to: '#',//{ name: 'dashboard' },
-        active: route.name === 'dashboard'
-    },
-    {
         title: 'DAO',
         to: '#',
         theme: 'text-[#666666]',
@@ -142,6 +137,10 @@ const navItems = computed(() => [
         title: 'Collection',
         to: { name: 'collection' },
         active: route.name === 'collection'
+    },
+    {
+        title: 'Opensea',
+        href: 'https://opensea.io/collection/we-are-hexheads'
     },
     {
         title: 'Twitter',
