@@ -218,6 +218,8 @@ function setTraits() {
     if (address.value) {
         const items = generateTraits(address.value);
 
+        console.log(items);
+
         traits.value = getTraitsByIndexex(items);
     }
 }
