@@ -25,5 +25,5 @@ export default [
     [...Array(256).keys()], // 4 - Eyes
     [...Array(256).keys()], // 5 - Hair
     [...Array(256).keys()], // 6 - Hat
-    [...Array(27).keys()], // 7 - Extra
+    [...Array(26).keys()], // 7 - Extra
 ];
