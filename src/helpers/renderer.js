@@ -15,7 +15,7 @@ function generateAddress() {
 
 function isFoil(idHex) {
     const id = BigInt(idHex);
-    if (id % BigInt("1500000000") === 0n) {
+    if (id % BigInt("5000000000") === 0n) {
         return true;
     }
     return false
