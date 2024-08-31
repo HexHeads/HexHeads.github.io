@@ -8,4 +8,12 @@ image-amd64:
 
 build:
 	rm -rf dist;
+	rm -rf css;
+	rm -rf fonts;
+	rm -rf img;
+	rm -rf js;
+	rm favicon.ico;
+	rm index.html;
+
 	npm run build;
+	mv dist/* ./
