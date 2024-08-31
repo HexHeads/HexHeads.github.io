@@ -128,23 +128,21 @@ const navItems = computed(() => [
         active: route.name === 'scan'
     },
     {
-        title: 'DAO',
-        to: '#',
-        theme: 'text-[#666666]',
-        active: route.name === ''
-    },
-    {
         title: 'Collection',
         to: { name: 'collection' },
         active: route.name === 'collection'
+    },
+    {
+        title: 'Docs',
+        href: 'https://docs.hexheads.io/'
     },
     {
         title: 'Opensea',
         href: 'https://opensea.io/collection/we-are-hexheads'
     },
     {
-        title: 'Twitter',
-        href: 'https://twitter.com/WeAreHexHeads'
+        title: 'Discord',
+        href: 'https://discord.gg/xMRhYCMbQ7'
     },
 ]);
 
