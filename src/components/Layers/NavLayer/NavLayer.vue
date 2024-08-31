@@ -25,7 +25,7 @@
             >
                 <div :class="classes.navItem">
                     <ActionLink
-                        v-if="!item.active"
+                        v-if="!item.active && !item.href"
                         :class="[classes.navLink, item.to === '#' && 'pointer-events-none opacity-30']"
                         :theme="!item.theme ? 'black' : ''"
                         :to="item.to"
@@ -34,6 +34,15 @@
                             color: item.theme || ''
                         }"
                         @click="close(id)"
+                    >
+                        {{ item.title }}
+                    </ActionLink>
+                    <ActionLink
+                        v-else-if="item.href"
+                        :class="[classes.navLink]"
+                        :href="item.href"
+                        theme="secondary"
+                        target="_blank"
                     >
                         {{ item.title }}
                     </ActionLink>
@@ -109,25 +118,16 @@ const navItems = computed(() => [
         active: route.name === 'scan'
     },
     {
-        title: 'Dashboard',
-        to: '#',
-        active: route.name === 'dashboard'
+        title: 'Docs',
+        href: 'https://docs.hexheads.io/'
     },
     {
-        title: 'DAO',
-        to: '#',
-        theme: 'text-[#666666]',
-        active: route.name === 'dao'
+        title: 'Opensea',
+        href: 'https://opensea.io/collection/we-are-hexheads'
     },
     {
-        title: 'Social',
-        to: '#',
-        active: route.name === 'social'
-    },
-    {
-        title: 'Collection',
-        to: { name: 'collection' },
-        active: route.name === 'collection'
+        title: 'Discord',
+        href: 'https://discord.gg/xMRhYCMbQ7'
     },
 ]);
 
